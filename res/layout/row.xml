@@ -1,0 +1,33 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal" >
+
+    <ImageView
+        android:id="@+id/icon"
+        android:layout_width="22px"
+        android:layout_height="wrap_content"
+        android:paddingLeft="2px"
+        android:paddingRight="2px"
+        android:paddingTop="8px"
+        android:src="@drawable/airport" >
+    </ImageView>
+
+    <TextView
+        android:id="@+id/label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp" 
+        android:layout_toRightOf="@id/icon"/>
+    
+    <ImageView
+        android:id="@+id/arrow"
+        android:layout_width="22px"
+        android:layout_height="wrap_content"
+        android:paddingTop="10px"
+        android:src="@drawable/arrow"
+        android:layout_toRightOf="@id/label"
+        android:layout_alignParentRight="true">
+    </ImageView>
+
+</RelativeLayout>
