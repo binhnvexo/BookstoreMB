@@ -15,6 +15,7 @@ import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.app.ListActivity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Base64;
 import android.view.Menu;
@@ -36,26 +37,26 @@ public class MainActivity extends ListActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        HttpClient client = new DefaultHttpClient();
-        HttpGet request = new HttpGet(URL);
-        request.setHeader("Authorization",
-                      "Basic "
-                          + Base64.encodeToString((username + ":" + password).getBytes(),
-                                                  Base64.NO_WRAP));
-        ResponseHandler<String> handler = new BasicResponseHandler();
-        try {
-          HttpResponse response = client.execute(request);
-          HttpEntity entity = response.getEntity();
-          if (entity != null) {
-            InputStream is = entity.getContent();
-            String responseStr = convertStreamToString(is);
-          }
-        } catch (ClientProtocolException cpe) {
-          cpe.printStackTrace();
-        } catch (IOException e) {
-          e.printStackTrace();
-        }
-        client.getConnectionManager().shutdown();
+//        HttpClient client = new DefaultHttpClient();
+//        HttpGet request = new HttpGet(URL);
+//        request.setHeader("Authorization",
+//                      "Basic "
+//                          + Base64.encodeToString((username + ":" + password).getBytes(),
+//                                                  Base64.NO_WRAP));
+//        ResponseHandler<String> handler = new BasicResponseHandler();
+//        try {
+//          HttpResponse response = client.execute(request);
+//          HttpEntity entity = response.getEntity();
+//          if (entity != null) {
+//            InputStream is = entity.getContent();
+//            String responseStr = convertStreamToString(is);
+//          }
+//        } catch (ClientProtocolException cpe) {
+//          cpe.printStackTrace();
+//        } catch (IOException e) {
+//          e.printStackTrace();
+//        }
+//        client.getConnectionManager().shutdown();
         setListAdapter(new ArrayAdapter<String>(this, R.layout.row, R.id.label, items));
     }
 
@@ -71,6 +72,8 @@ public class MainActivity extends ListActivity {
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
       super.onListItemClick(l, v, position, id);
+      Intent intent = new Intent(this, ContentActivity.class);
+      startActivity(intent);
     }
     
     private String convertStreamToString(InputStream is) {
