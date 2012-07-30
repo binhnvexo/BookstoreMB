@@ -4,6 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.http.conn.routing.RouteInfo.TunnelType;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -41,32 +42,35 @@ public class MainActivity extends ListActivity {
         List<String> bookNames = new ArrayList<String>();
         books = new ArrayList<Book>();
         TextView nocontent = (TextView) findViewById(R.id.nocontent);
-        try {
-          RestClient rest = new RestClient(SEARCH_ALL_BOOK_URL);
-          rest.execute(RestClient.RequestMethod.GET);
-          if (rest.getResponseCode() == 200) {
-            JSONArray jsons = (JSONArray) new JSONArray(rest.getResponseStr());
-            for (int i = 0; i < jsons.length(); i++) {
-              JSONObject json = jsons.getJSONObject(i);
-              Book book = Utils.createBookFromJSON(json);
-              books.add(book);
-            }
-            for (Book b : books) {
-              bookNames.add(b.getName());
-            }
-            adapter = new BookstoreAdapter(this, bookNames);
-            this.setListAdapter(adapter);
-            nocontent.setText("");
-          } else {
-            adapter = new BookstoreAdapter(this, bookNames);
-            this.setListAdapter(adapter);
-            nocontent.setText(R.string.nocontent);
-          }
-        } catch (JSONException jse) {
-          jse.printStackTrace();
-        } catch (UnsupportedEncodingException ue) {
-          ue.printStackTrace();
-        }
+//        try {
+//          RestClient rest = new RestClient(SEARCH_ALL_BOOK_URL);
+//          rest.execute(RestClient.RequestMethod.GET);
+//          if (rest.getResponseCode() == 200) {
+//            JSONArray jsons = (JSONArray) new JSONArray(rest.getResponseStr());
+//            for (int i = 0; i < jsons.length(); i++) {
+//              JSONObject json = jsons.getJSONObject(i);
+//              Book book = Utils.createBookFromJSON(json);
+//              books.add(book);
+//            }
+//            for (Book b : books) {
+//              bookNames.add(b.getName());
+//            }
+//            adapter = new BookstoreAdapter(this, bookNames);
+//            this.setListAdapter(adapter);
+//            nocontent.setText("");
+//          } else {
+//            adapter = new BookstoreAdapter(this, bookNames);
+//            this.setListAdapter(adapter);
+//            nocontent.setText(R.string.nocontent);
+//          }
+//        } catch (JSONException jse) {
+//          jse.printStackTrace();
+//        } catch (UnsupportedEncodingException ue) {
+//          ue.printStackTrace();
+//        }
+        bookNames.add("ABC");
+        adapter = new BookstoreAdapter(this, bookNames);
+        this.setListAdapter(adapter);
     }
 
     /* (non-Javadoc)
