@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.bookstoremb.models.Book;
 import com.example.bookstoremb.utils.Constants;
@@ -29,14 +30,14 @@ public class MainActivity extends ListActivity {
     String[] items = {};
     String SEARCH_ALL_BOOK_URL = "http://192.168.1.130:8080/rest/private/bookstore/searchAllBook";
     String result;
-    String username = "root";
-    String password = "gtn";
+    List<Book> books;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        List<Book> books = new ArrayList<Book>();
+        books = new ArrayList<Book>();
+        TextView nocontent = (TextView) findViewById(R.id.nocontent);
         try {
           RestClient rest = new RestClient(SEARCH_ALL_BOOK_URL);
           rest.execute(RestClient.RequestMethod.GET);
@@ -47,18 +48,22 @@ public class MainActivity extends ListActivity {
               Book book = Utils.createBookFromJSON(json);
               books.add(book);
             }
+            List<String> bookNames = new ArrayList<String>();
+            for (Book b : books) {
+              bookNames.add(b.getName());
+            }
+            items = bookNames.toArray(new String[bookNames.size()]);
+            setListAdapter(new ArrayAdapter<String>(this, R.layout.row, R.id.label, items));
+            nocontent.setText("");
+          } else {
+            setListAdapter(new ArrayAdapter<String>(this, R.layout.row, R.id.label, items));
+            nocontent.setText(R.string.nocontent);
           }
         } catch (JSONException jse) {
           jse.printStackTrace();
         } catch (UnsupportedEncodingException ue) {
           ue.printStackTrace();
         }
-        List<String> bookNames = new ArrayList<String>();
-        for (Book b : books) {
-          bookNames.add(b.getName());
-        }
-        items = bookNames.toArray(new String[bookNames.size()]);
-        setListAdapter(new ArrayAdapter<String>(this, R.layout.row, R.id.label, items));
     }
 
     /* (non-Javadoc)
@@ -67,7 +72,15 @@ public class MainActivity extends ListActivity {
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
       super.onListItemClick(l, v, position, id);
+      Book book = new Book();
+      book = books.get(position);
+      
       Intent intent = new Intent(this, ContentActivity.class);
+      intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+      intent.putExtra(Constants.BOOK_ID, book.getBookId());
+      intent.putExtra(Constants.BOOK_NAME, book.getName());
+      intent.putExtra(Constants.BOOK_CATEGORY, book.getCategory());
+      intent.putExtra(Constants.BOOK_CONTENT, book.getContent());
       startActivity(intent);
     }
     

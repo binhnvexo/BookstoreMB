@@ -30,4 +30,9 @@ public class Constants {
   public static final int MENU_BACK = Menu.FIRST + 2;
   public static final int MENU_CLOSE = Menu.FIRST + 3;
   
+  public static final String BOOK_ID = "bookId";
+  public static final String BOOK_NAME = "name";
+  public static final String BOOK_CATEGORY = "category";
+  public static final String BOOK_CONTENT = "content";
+  
 }

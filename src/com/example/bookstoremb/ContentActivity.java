@@ -3,17 +3,16 @@
  */
 package com.example.bookstoremb;
 
-import com.example.bookstoremb.utils.Constants;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.ContextMenu;
-import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.TextView;
+
+import com.example.bookstoremb.models.Book;
+import com.example.bookstoremb.utils.Constants;
+import com.example.bookstoremb.utils.Utils;
 
 /**
  * @author Administrator
@@ -21,12 +20,24 @@ import android.widget.TextView;
  */
 public class ContentActivity extends Activity {
 
+  private Book book;
+  
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_content);
-		TextView str = (TextView) findViewById(R.id.name);
-		str.setText("Hello world");
+		TextView name = (TextView) findViewById(R.id.name);
+		TextView content = (TextView) findViewById(R.id.content);
+		Bundle extras = getIntent().getExtras();
+		book = new Book();
+		if (extras != null) {
+		  book.setBookId(extras.getString(Constants.BOOK_ID));
+		  book.setName(extras.getString(Constants.BOOK_NAME));
+		  book.setCategory(Utils.bookCategoryStringToEnum(extras.getString(Constants.BOOK_CATEGORY)));
+		  book.setContent(extras.getString(Constants.BOOK_CONTENT));
+    }
+		name.setText(book.getName());
+		content.setText(book.getContent());
 	}
 
 	/* (non-Javadoc)
