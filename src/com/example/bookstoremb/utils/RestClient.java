@@ -20,6 +20,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +37,8 @@ import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HTTP;
+
+import android.util.Base64;
 
 /**
  * Created by The eXo Platform SAS
@@ -55,6 +58,9 @@ public class RestClient {
   private int responseCode;
   private String errorMessage;
   private String responseStr;
+  private HttpResponse respone;
+  String username = "root";
+  String password = "gtn";
   
   /**
    * 
@@ -65,7 +71,7 @@ public class RestClient {
     headers = new ArrayList<NameValuePair>();
   }
 
-  public void execute(RequestMethod method) throws Exception {
+  public void execute(RequestMethod method) throws UnsupportedEncodingException {
     switch (method) {
       case GET:
         {
@@ -82,6 +88,7 @@ public class RestClient {
             }
           }
           HttpGet request = new HttpGet(url + combinedParams);
+          request.setHeader("Authorization", getAuthorization());
           for (NameValuePair h : headers) {
             request.addHeader(h.getName(), h.getValue());
           }
@@ -93,6 +100,7 @@ public class RestClient {
           HttpPost request = new HttpPost(url);
           for (NameValuePair h : headers) {
             request.addHeader(h.getName(), h.getValue());
+            request.setHeader("Authorization", getAuthorization());
           }
           if (!params.isEmpty()) {
             request.setEntity(new UrlEncodedFormEntity(params, HTTP.UTF_8));
@@ -130,6 +138,13 @@ public class RestClient {
    */
   public String getResponseStr() {
     return responseStr;
+  }
+  
+  /**
+   * @return the respone
+   */
+  public HttpResponse getRespone() {
+    return respone;
   }
   
   private void executeRequest(HttpUriRequest request, String url) {
@@ -172,6 +187,10 @@ public class RestClient {
       }
     }
     return sb.toString();
+  }
+  
+  private String getAuthorization() {
+    return "Basic " + Base64.encodeToString((username + ":" + password).getBytes(), Base64.NO_WRAP);
   }
 
 }

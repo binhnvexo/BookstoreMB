@@ -16,6 +16,8 @@
  */
 package com.example.bookstoremb.utils;
 
+import android.view.Menu;
+
 /**
  * Created by The eXo Platform SAS
  * Author : BinhNV
@@ -23,5 +25,9 @@ package com.example.bookstoremb.utils;
  * Jul 27, 2012  
  */
 public class Constants {
+  
+  public static final int MENU_EDIT = Menu.FIRST + 1;
+  public static final int MENU_BACK = Menu.FIRST + 2;
+  public static final int MENU_CLOSE = Menu.FIRST + 3;
   
 }

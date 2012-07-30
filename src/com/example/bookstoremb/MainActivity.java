@@ -1,34 +1,33 @@
 package com.example.bookstoremb;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.ResponseHandler;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.BasicResponseHandler;
-import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Base64;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.bookstoremb.models.Book;
+import com.example.bookstoremb.utils.Constants;
+import com.example.bookstoremb.utils.RestClient;
+import com.example.bookstoremb.utils.Utils;
+
 public class MainActivity extends ListActivity {
 
     TextView selection;
-    String[] items = {"Alice in wonderland", "Jouney to the West", "Shelock Holme", "The Mask"};
-    String URL = "http://192.168.1.130:8080/rest/private/bookstore/searchAllBook";
+    String[] items = {};
+    String SEARCH_ALL_BOOK_URL = "http://192.168.1.130:8080/rest/private/bookstore/searchAllBook";
     String result;
     String username = "root";
     String password = "gtn";
@@ -37,33 +36,29 @@ public class MainActivity extends ListActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//        HttpClient client = new DefaultHttpClient();
-//        HttpGet request = new HttpGet(URL);
-//        request.setHeader("Authorization",
-//                      "Basic "
-//                          + Base64.encodeToString((username + ":" + password).getBytes(),
-//                                                  Base64.NO_WRAP));
-//        ResponseHandler<String> handler = new BasicResponseHandler();
-//        try {
-//          HttpResponse response = client.execute(request);
-//          HttpEntity entity = response.getEntity();
-//          if (entity != null) {
-//            InputStream is = entity.getContent();
-//            String responseStr = convertStreamToString(is);
-//          }
-//        } catch (ClientProtocolException cpe) {
-//          cpe.printStackTrace();
-//        } catch (IOException e) {
-//          e.printStackTrace();
-//        }
-//        client.getConnectionManager().shutdown();
+        List<Book> books = new ArrayList<Book>();
+        try {
+          RestClient rest = new RestClient(SEARCH_ALL_BOOK_URL);
+          rest.execute(RestClient.RequestMethod.GET);
+          if (rest.getResponseCode() == 200) {
+            JSONArray jsons = (JSONArray) new JSONArray(rest.getResponseStr());
+            for (int i = 0; i < jsons.length(); i++) {
+              JSONObject json = jsons.getJSONObject(i);
+              Book book = Utils.createBookFromJSON(json);
+              books.add(book);
+            }
+          }
+        } catch (JSONException jse) {
+          jse.printStackTrace();
+        } catch (UnsupportedEncodingException ue) {
+          ue.printStackTrace();
+        }
+        List<String> bookNames = new ArrayList<String>();
+        for (Book b : books) {
+          bookNames.add(b.getName());
+        }
+        items = bookNames.toArray(new String[bookNames.size()]);
         setListAdapter(new ArrayAdapter<String>(this, R.layout.row, R.id.label, items));
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_main, menu);
-        return true;
     }
 
     /* (non-Javadoc)
@@ -76,26 +71,24 @@ public class MainActivity extends ListActivity {
       startActivity(intent);
     }
     
-    private String convertStreamToString(InputStream is) {
+    /* (non-Javadoc)
+     * @see android.app.Activity#onCreateOptionsMenu(android.view.Menu)
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+      menu.add(menu.NONE, Constants.MENU_CLOSE, menu.NONE, R.string.menu_close);
+      return super.onCreateOptionsMenu(menu);
+    }
 
-      BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-      StringBuilder sb = new StringBuilder();
-
-      String line = null;
-      try {
-          while ((line = reader.readLine()) != null) {
-              sb.append(line + "\n");
-          }
-      } catch (IOException e) {
-          e.printStackTrace();
-      } finally {
-          try {
-              is.close();
-          } catch (IOException e) {
-              e.printStackTrace();
-          }
+    /* (non-Javadoc)
+     * @see android.app.Activity#onMenuItemSelected(int, android.view.MenuItem)
+     */
+    @Override
+    public boolean onMenuItemSelected(int featureId, MenuItem item) {
+      if (Constants.MENU_CLOSE == item.getItemId()) {
+        finish();
       }
-      return sb.toString();
-  }
-    
+      return super.onMenuItemSelected(featureId, item);
+    }
+
 }
