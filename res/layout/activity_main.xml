@@ -10,14 +10,14 @@
         android:layout_height="wrap_content"/>
     
     <ListView android:id="@android:id/list"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:drawSelectorOnTop="false"
-        android:background="@color/white"
-        android:layout_marginLeft="20px"
-        android:layout_marginTop="20px"
-        android:layout_marginRight="20px"
-        android:layout_marginBottom="20px">
-    </ListView>
-
+		android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+		android:drawSelectorOnTop="false"
+		android:background="@color/white"
+		android:layout_marginLeft="20px"
+		android:layout_marginTop="20px"
+		android:layout_marginRight="20px"
+		android:layout_marginBottom="20px">
+	</ListView>
+        
 </LinearLayout>

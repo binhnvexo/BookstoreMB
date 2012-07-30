@@ -8,6 +8,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.R.layout;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,8 +18,8 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.example.bookstoremb.adapter.BookstoreAdapter;
 import com.example.bookstoremb.models.Book;
 import com.example.bookstoremb.utils.Constants;
 import com.example.bookstoremb.utils.RestClient;
@@ -36,6 +37,8 @@ public class MainActivity extends ListActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        BookstoreAdapter adapter;
+        List<String> bookNames = new ArrayList<String>();
         books = new ArrayList<Book>();
         TextView nocontent = (TextView) findViewById(R.id.nocontent);
         try {
@@ -48,15 +51,15 @@ public class MainActivity extends ListActivity {
               Book book = Utils.createBookFromJSON(json);
               books.add(book);
             }
-            List<String> bookNames = new ArrayList<String>();
             for (Book b : books) {
               bookNames.add(b.getName());
             }
-            items = bookNames.toArray(new String[bookNames.size()]);
-            setListAdapter(new ArrayAdapter<String>(this, R.layout.row, R.id.label, items));
+            adapter = new BookstoreAdapter(this, bookNames);
+            this.setListAdapter(adapter);
             nocontent.setText("");
           } else {
-            setListAdapter(new ArrayAdapter<String>(this, R.layout.row, R.id.label, items));
+            adapter = new BookstoreAdapter(this, bookNames);
+            this.setListAdapter(adapter);
             nocontent.setText(R.string.nocontent);
           }
         } catch (JSONException jse) {

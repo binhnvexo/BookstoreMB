@@ -31,8 +31,10 @@ import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
@@ -52,6 +54,7 @@ public class RestClient {
     GET, POST, PUT, DELETE;
   }
   
+  private final String AUTHORIZATION = "Authorization";
   private List<NameValuePair> params;
   private List<NameValuePair> headers;
   private String url;
@@ -88,7 +91,7 @@ public class RestClient {
             }
           }
           HttpGet request = new HttpGet(url + combinedParams);
-          request.setHeader("Authorization", getAuthorization());
+          request.setHeader(AUTHORIZATION, getAuthorization());
           for (NameValuePair h : headers) {
             request.addHeader(h.getName(), h.getValue());
           }
@@ -100,10 +103,30 @@ public class RestClient {
           HttpPost request = new HttpPost(url);
           for (NameValuePair h : headers) {
             request.addHeader(h.getName(), h.getValue());
-            request.setHeader("Authorization", getAuthorization());
+            request.setHeader(AUTHORIZATION, getAuthorization());
           }
           if (!params.isEmpty()) {
             request.setEntity(new UrlEncodedFormEntity(params, HTTP.UTF_8));
+          }
+          executeRequest(request, url);
+          break;
+        }
+      case DELETE:
+        {
+          HttpDelete request = new HttpDelete(url);
+          request.setHeader(AUTHORIZATION, getAuthorization());
+          for (NameValuePair h : headers) {
+            request.addHeader(h.getName(), h.getValue());
+          }
+          executeRequest(request, url);
+          break;
+        }
+      case PUT:
+        {
+          HttpPut request = new HttpPut();
+          request.setHeader(AUTHORIZATION, getAuthorization());
+          for (NameValuePair h : headers) {
+            request.addHeader(h.getName(), h.getValue());
           }
           executeRequest(request, url);
           break;
