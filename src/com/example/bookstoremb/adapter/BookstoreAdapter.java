@@ -92,11 +92,11 @@ public class BookstoreAdapter extends BaseAdapter {
     holder.textView.setText(arr.get(position));
     RelativeLayout listRow = (RelativeLayout) convertView.findViewById(R.id.list_row); 
     if (position == 0) {
-      listRow.setBackgroundResource(R.drawable.celltop);
+//      listRow.setBackgroundResource(R.drawable.celltop);
 //      listRow.setBackgroundColor(Color.RED);
     }
     if (position == (arr.size() - 1)) {
-      listRow.setBackgroundResource(R.drawable.cellbottom);
+//      listRow.setBackgroundResource(R.drawable.cellbottom);
 //      listRow.setBackgroundColor(Color.GREEN);
     }
     return convertView;

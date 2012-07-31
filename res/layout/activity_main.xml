@@ -1,23 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent" 
+    android:layout_height="fill_parent"
     android:orientation="vertical"
-    android:background="@drawable/bglayout">
-
-    <TextView android:id="@+id/nocontent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+    android:background="@drawable/custombitmap">
     
-    <ListView android:id="@android:id/list"
-		android:layout_width="fill_parent"
-	    android:layout_height="fill_parent"
-		android:drawSelectorOnTop="false"
-		android:background="@color/white"
-		android:layout_marginLeft="20px"
-		android:layout_marginTop="20px"
-		android:layout_marginRight="20px"
-		android:layout_marginBottom="20px">
+    <ListView
+        android:id="@android:id/list"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:drawSelectorOnTop="false" 
+        android:layout_marginLeft="7dip"
+		android:layout_marginTop="7dip"
+		android:layout_marginRight="7dip"
+		android:layout_marginBottom="7dip"
+		android:dividerHeight="-2dip">
 	</ListView>
         
 </LinearLayout>

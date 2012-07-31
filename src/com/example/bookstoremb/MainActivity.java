@@ -41,36 +41,33 @@ public class MainActivity extends ListActivity {
         BookstoreAdapter adapter;
         List<String> bookNames = new ArrayList<String>();
         books = new ArrayList<Book>();
-        TextView nocontent = (TextView) findViewById(R.id.nocontent);
-//        try {
-//          RestClient rest = new RestClient(SEARCH_ALL_BOOK_URL);
-//          rest.execute(RestClient.RequestMethod.GET);
-//          if (rest.getResponseCode() == 200) {
-//            JSONArray jsons = (JSONArray) new JSONArray(rest.getResponseStr());
-//            for (int i = 0; i < jsons.length(); i++) {
-//              JSONObject json = jsons.getJSONObject(i);
-//              Book book = Utils.createBookFromJSON(json);
-//              books.add(book);
-//            }
-//            for (Book b : books) {
-//              bookNames.add(b.getName());
-//            }
-//            adapter = new BookstoreAdapter(this, bookNames);
-//            this.setListAdapter(adapter);
+//        TextView nocontent = (TextView) findViewById(R.id.nocontent);
+        try {
+          RestClient rest = new RestClient(SEARCH_ALL_BOOK_URL);
+          rest.execute(RestClient.RequestMethod.GET);
+          if (rest.getResponseCode() == 200) {
+            JSONArray jsons = (JSONArray) new JSONArray(rest.getResponseStr());
+            for (int i = 0; i < jsons.length(); i++) {
+              JSONObject json = jsons.getJSONObject(i);
+              Book book = Utils.createBookFromJSON(json);
+              books.add(book);
+            }
+            for (Book b : books) {
+              bookNames.add(b.getName());
+            }
+            adapter = new BookstoreAdapter(this, bookNames);
+            this.setListAdapter(adapter);
 //            nocontent.setText("");
-//          } else {
-//            adapter = new BookstoreAdapter(this, bookNames);
-//            this.setListAdapter(adapter);
+          } else {
+            adapter = new BookstoreAdapter(this, bookNames);
+            this.setListAdapter(adapter);
 //            nocontent.setText(R.string.nocontent);
-//          }
-//        } catch (JSONException jse) {
-//          jse.printStackTrace();
-//        } catch (UnsupportedEncodingException ue) {
-//          ue.printStackTrace();
-//        }
-        bookNames.add("ABC");
-        adapter = new BookstoreAdapter(this, bookNames);
-        this.setListAdapter(adapter);
+          }
+        } catch (JSONException jse) {
+          jse.printStackTrace();
+        } catch (UnsupportedEncodingException ue) {
+          ue.printStackTrace();
+        }
     }
 
     /* (non-Javadoc)
@@ -86,7 +83,7 @@ public class MainActivity extends ListActivity {
       intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
       intent.putExtra(Constants.BOOK_ID, book.getBookId());
       intent.putExtra(Constants.BOOK_NAME, book.getName());
-      intent.putExtra(Constants.BOOK_CATEGORY, book.getCategory());
+      intent.putExtra(Constants.BOOK_CATEGORY, Utils.bookCategoryEnumToString(book.getCategory()));
       intent.putExtra(Constants.BOOK_CONTENT, book.getContent());
       startActivity(intent);
     }

@@ -6,6 +6,7 @@ package com.example.bookstoremb;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -28,6 +29,7 @@ public class ContentActivity extends Activity {
 		setContentView(R.layout.activity_content);
 		TextView name = (TextView) findViewById(R.id.name);
 		TextView content = (TextView) findViewById(R.id.content);
+		TextView category = (TextView) findViewById(R.id.category);
 		Bundle extras = getIntent().getExtras();
 		book = new Book();
 		if (extras != null) {
@@ -38,6 +40,8 @@ public class ContentActivity extends Activity {
     }
 		name.setText(book.getName());
 		content.setText(book.getContent());
+		category.setText(Utils.bookCategoryEnumToString(book.getCategory()));
+		content.setMovementMethod(new ScrollingMovementMethod());
 	}
 
 	/* (non-Javadoc)

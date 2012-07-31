@@ -1,15 +1,15 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@drawable/cellsingle"
+    android:background="@drawable/cellbottom"
     android:id="@+id/list_row">
     	
     	<ImageView android:id="@+id/icon"
 	        android:layout_width="wrap_content"
 	        android:layout_height="fill_parent"
-	        android:paddingLeft="2px"
-	        android:paddingRight="2px"
-	        android:paddingTop="8px"
+	        android:paddingLeft="2dip"
+	        android:paddingRight="2dip"
+	        android:paddingTop="6dip"
 			android:src="@drawable/airport">
 		</ImageView>
 		
@@ -17,13 +17,16 @@
 		    android:layout_width="wrap_content"
 		    android:layout_height="fill_parent"
 		    android:layout_toRightOf="@id/icon"
-			android:textSize="20sp" />
+			android:textColor="#040404"
+			android:typeface="sans"
+        	android:textSize="15dip"
+        	android:textStyle="bold"/>
 		    
 		<ImageView android:id="@+id/arrow"
 		    android:layout_width="wrap_content"
 		    android:layout_height="fill_parent"
-		    android:paddingRight="2px"
-		    android:paddingTop="10px"
+		    android:paddingRight="2dip"
+		    android:paddingTop="10dip"
 			android:src="@drawable/arrow"
 			android:layout_alignParentRight="true">
 		</ImageView>
