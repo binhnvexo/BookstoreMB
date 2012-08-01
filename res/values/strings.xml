@@ -7,6 +7,10 @@
     <string name="menu_close">CLOSE</string>
     <string name="menu_back">BACK</string>
     <string name="menu_search">SEARCH</string>
+    <string name="tltsearch">SEARCH BOOK</string>
+    <string name="btnsearch">SEARCH</string>
+    <string name="btncancel">CANCEL</string>
+    <string name="hint">Book name</string>
     <string name="nocontent">No book avaialbe now</string>
 
 </resources>

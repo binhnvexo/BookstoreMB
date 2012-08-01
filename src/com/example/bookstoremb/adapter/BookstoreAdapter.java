@@ -19,6 +19,7 @@ package com.example.bookstoremb.adapter;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,17 +40,17 @@ import com.example.bookstoremb.models.Book;
  */
 public class BookstoreAdapter extends BaseAdapter {
 
-  private MainActivity activity;
+  private Context context;
   private List<Book> arr = new ArrayList<Book>();
   private static LayoutInflater inflater;
   
   /**
    * 
    */
-  public BookstoreAdapter(MainActivity activity, List<Book> arr) {
-    this.activity = activity;
+  public BookstoreAdapter(Context context, List<Book> arr) {
+    this.context = context;
     this.arr = arr;
-    inflater = LayoutInflater.from(activity);
+    inflater = LayoutInflater.from(context);
   }
 
   /* (non-Javadoc)
