@@ -1,0 +1,564 @@
+commit 429ce81501b05f3454466f79d98732715ec0bdd6
+Author: BinhNV <binhnv@exoplatform.com>
+Date:   Thu Jul 26 18:23:58 2012 +0700
+
+    the first commit android project
+
+diff --git a/.classpath b/.classpath
+new file mode 100644
+index 0000000..a4763d1
+--- /dev/null
++++ b/.classpath
+@@ -0,0 +1,8 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<classpath>
++	<classpathentry kind="src" path="src"/>
++	<classpathentry kind="src" path="gen"/>
++	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
++	<classpathentry kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
++	<classpathentry kind="output" path="bin/classes"/>
++</classpath>
+diff --git a/.project b/.project
+new file mode 100644
+index 0000000..7ab1fae
+--- /dev/null
++++ b/.project
+@@ -0,0 +1,33 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<projectDescription>
++	<name>BookstoreMB</name>
++	<comment></comment>
++	<projects>
++	</projects>
++	<buildSpec>
++		<buildCommand>
++			<name>com.android.ide.eclipse.adt.ResourceManagerBuilder</name>
++			<arguments>
++			</arguments>
++		</buildCommand>
++		<buildCommand>
++			<name>com.android.ide.eclipse.adt.PreCompilerBuilder</name>
++			<arguments>
++			</arguments>
++		</buildCommand>
++		<buildCommand>
++			<name>org.eclipse.jdt.core.javabuilder</name>
++			<arguments>
++			</arguments>
++		</buildCommand>
++		<buildCommand>
++			<name>com.android.ide.eclipse.adt.ApkBuilder</name>
++			<arguments>
++			</arguments>
++		</buildCommand>
++	</buildSpec>
++	<natures>
++		<nature>com.android.ide.eclipse.adt.AndroidNature</nature>
++		<nature>org.eclipse.jdt.core.javanature</nature>
++	</natures>
++</projectDescription>
+diff --git a/AndroidManifest.xml b/AndroidManifest.xml
+new file mode 100644
+index 0000000..6abf336
+--- /dev/null
++++ b/AndroidManifest.xml
+@@ -0,0 +1,25 @@
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++    package="com.example.bookstoremb"
++    android:versionCode="1"
++    android:versionName="1.0" >
++
++    <uses-sdk
++        android:minSdkVersion="8"
++        android:targetSdkVersion="15" />
++
++    <application
++        android:icon="@drawable/ic_launcher"
++        android:label="@string/app_name"
++        android:theme="@style/AppTheme" >
++        <activity
++            android:name=".MainActivity"
++            android:label="@string/title_activity_main" >
++            <intent-filter>
++                <action android:name="android.intent.action.MAIN" />
++
++                <category android:name="android.intent.category.LAUNCHER" />
++            </intent-filter>
++        </activity>
++    </application>
++
++</manifest>
+\ No newline at end of file
+diff --git a/bin/AndroidManifest.xml b/bin/AndroidManifest.xml
+new file mode 100644
+index 0000000..6abf336
+--- /dev/null
++++ b/bin/AndroidManifest.xml
+@@ -0,0 +1,25 @@
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++    package="com.example.bookstoremb"
++    android:versionCode="1"
++    android:versionName="1.0" >
++
++    <uses-sdk
++        android:minSdkVersion="8"
++        android:targetSdkVersion="15" />
++
++    <application
++        android:icon="@drawable/ic_launcher"
++        android:label="@string/app_name"
++        android:theme="@style/AppTheme" >
++        <activity
++            android:name=".MainActivity"
++            android:label="@string/title_activity_main" >
++            <intent-filter>
++                <action android:name="android.intent.action.MAIN" />
++
++                <category android:name="android.intent.category.LAUNCHER" />
++            </intent-filter>
++        </activity>
++    </application>
++
++</manifest>
+\ No newline at end of file
+diff --git a/bin/BookstoreMB.apk b/bin/BookstoreMB.apk
+new file mode 100644
+index 0000000..f503290
+Binary files /dev/null and b/bin/BookstoreMB.apk differ
+diff --git a/bin/classes.dex b/bin/classes.dex
+new file mode 100644
+index 0000000..66e2175
+Binary files /dev/null and b/bin/classes.dex differ
+diff --git a/bin/classes/com/example/bookstoremb/BuildConfig.class b/bin/classes/com/example/bookstoremb/BuildConfig.class
+new file mode 100644
+index 0000000..bb34de9
+Binary files /dev/null and b/bin/classes/com/example/bookstoremb/BuildConfig.class differ
+diff --git a/bin/classes/com/example/bookstoremb/MainActivity.class b/bin/classes/com/example/bookstoremb/MainActivity.class
+new file mode 100644
+index 0000000..95c6cec
+Binary files /dev/null and b/bin/classes/com/example/bookstoremb/MainActivity.class differ
+diff --git a/bin/classes/com/example/bookstoremb/R$attr.class b/bin/classes/com/example/bookstoremb/R$attr.class
+new file mode 100644
+index 0000000..94079d8
+Binary files /dev/null and b/bin/classes/com/example/bookstoremb/R$attr.class differ
+diff --git a/bin/classes/com/example/bookstoremb/R$color.class b/bin/classes/com/example/bookstoremb/R$color.class
+new file mode 100644
+index 0000000..ef13d8f
+Binary files /dev/null and b/bin/classes/com/example/bookstoremb/R$color.class differ
+diff --git a/bin/classes/com/example/bookstoremb/R$dimen.class b/bin/classes/com/example/bookstoremb/R$dimen.class
+new file mode 100644
+index 0000000..8e955dd
+Binary files /dev/null and b/bin/classes/com/example/bookstoremb/R$dimen.class differ
+diff --git a/bin/classes/com/example/bookstoremb/R$drawable.class b/bin/classes/com/example/bookstoremb/R$drawable.class
+new file mode 100644
+index 0000000..2c2619d
+Binary files /dev/null and b/bin/classes/com/example/bookstoremb/R$drawable.class differ
+diff --git a/bin/classes/com/example/bookstoremb/R$id.class b/bin/classes/com/example/bookstoremb/R$id.class
+new file mode 100644
+index 0000000..5ed5fea
+Binary files /dev/null and b/bin/classes/com/example/bookstoremb/R$id.class differ
+diff --git a/bin/classes/com/example/bookstoremb/R$layout.class b/bin/classes/com/example/bookstoremb/R$layout.class
+new file mode 100644
+index 0000000..c0f13d9
+Binary files /dev/null and b/bin/classes/com/example/bookstoremb/R$layout.class differ
+diff --git a/bin/classes/com/example/bookstoremb/R$menu.class b/bin/classes/com/example/bookstoremb/R$menu.class
+new file mode 100644
+index 0000000..8083d9f
+Binary files /dev/null and b/bin/classes/com/example/bookstoremb/R$menu.class differ
+diff --git a/bin/classes/com/example/bookstoremb/R$string.class b/bin/classes/com/example/bookstoremb/R$string.class
+new file mode 100644
+index 0000000..fa40d77
+Binary files /dev/null and b/bin/classes/com/example/bookstoremb/R$string.class differ
+diff --git a/bin/classes/com/example/bookstoremb/R$style.class b/bin/classes/com/example/bookstoremb/R$style.class
+new file mode 100644
+index 0000000..5b23dac
+Binary files /dev/null and b/bin/classes/com/example/bookstoremb/R$style.class differ
+diff --git a/bin/classes/com/example/bookstoremb/R.class b/bin/classes/com/example/bookstoremb/R.class
+new file mode 100644
+index 0000000..88bff6b
+Binary files /dev/null and b/bin/classes/com/example/bookstoremb/R.class differ
+diff --git a/bin/res/drawable-hdpi/airport.png b/bin/res/drawable-hdpi/airport.png
+new file mode 100644
+index 0000000..cc9e4d5
+Binary files /dev/null and b/bin/res/drawable-hdpi/airport.png differ
+diff --git a/bin/res/drawable-hdpi/arrow.png b/bin/res/drawable-hdpi/arrow.png
+new file mode 100644
+index 0000000..eb88f14
+Binary files /dev/null and b/bin/res/drawable-hdpi/arrow.png differ
+diff --git a/bin/res/drawable-hdpi/ic_action_search.png b/bin/res/drawable-hdpi/ic_action_search.png
+new file mode 100644
+index 0000000..ffec9be
+Binary files /dev/null and b/bin/res/drawable-hdpi/ic_action_search.png differ
+diff --git a/bin/res/drawable-hdpi/ic_launcher.png b/bin/res/drawable-hdpi/ic_launcher.png
+new file mode 100644
+index 0000000..1daef66
+Binary files /dev/null and b/bin/res/drawable-hdpi/ic_launcher.png differ
+diff --git a/bin/res/drawable-ldpi/ic_launcher.png b/bin/res/drawable-ldpi/ic_launcher.png
+new file mode 100644
+index 0000000..e2159bb
+Binary files /dev/null and b/bin/res/drawable-ldpi/ic_launcher.png differ
+diff --git a/bin/res/drawable-mdpi/ic_action_search.png b/bin/res/drawable-mdpi/ic_action_search.png
+new file mode 100644
+index 0000000..ce9399c
+Binary files /dev/null and b/bin/res/drawable-mdpi/ic_action_search.png differ
+diff --git a/bin/res/drawable-mdpi/ic_launcher.png b/bin/res/drawable-mdpi/ic_launcher.png
+new file mode 100644
+index 0000000..70642fb
+Binary files /dev/null and b/bin/res/drawable-mdpi/ic_launcher.png differ
+diff --git a/bin/res/drawable-xhdpi/ic_action_search.png b/bin/res/drawable-xhdpi/ic_action_search.png
+new file mode 100644
+index 0000000..b2d7b2d
+Binary files /dev/null and b/bin/res/drawable-xhdpi/ic_action_search.png differ
+diff --git a/bin/res/drawable-xhdpi/ic_launcher.png b/bin/res/drawable-xhdpi/ic_launcher.png
+new file mode 100644
+index 0000000..2769c26
+Binary files /dev/null and b/bin/res/drawable-xhdpi/ic_launcher.png differ
+diff --git a/bin/resources.ap_ b/bin/resources.ap_
+new file mode 100644
+index 0000000..61d42f0
+Binary files /dev/null and b/bin/resources.ap_ differ
+diff --git a/gen/com/example/bookstoremb/BuildConfig.java b/gen/com/example/bookstoremb/BuildConfig.java
+new file mode 100644
+index 0000000..b8a85e6
+--- /dev/null
++++ b/gen/com/example/bookstoremb/BuildConfig.java
+@@ -0,0 +1,6 @@
++/** Automatically generated file. DO NOT MODIFY */
++package com.example.bookstoremb;
++
++public final class BuildConfig {
++    public final static boolean DEBUG = true;
++}
+\ No newline at end of file
+diff --git a/gen/com/example/bookstoremb/R.java b/gen/com/example/bookstoremb/R.java
+new file mode 100644
+index 0000000..1e34e31
+--- /dev/null
++++ b/gen/com/example/bookstoremb/R.java
+@@ -0,0 +1,50 @@
++/* AUTO-GENERATED FILE.  DO NOT MODIFY.
++ *
++ * This class was automatically generated by the
++ * aapt tool from the resource data it found.  It
++ * should not be modified by hand.
++ */
++
++package com.example.bookstoremb;
++
++public final class R {
++    public static final class attr {
++    }
++    public static final class color {
++        public static final int grey=0x7f040000;
++        public static final int white=0x7f040001;
++    }
++    public static final class dimen {
++        public static final int padding_large=0x7f050002;
++        public static final int padding_medium=0x7f050001;
++        public static final int padding_small=0x7f050000;
++    }
++    public static final class drawable {
++        public static final int airport=0x7f020000;
++        public static final int arrow=0x7f020001;
++        public static final int ic_action_search=0x7f020002;
++        public static final int ic_launcher=0x7f020003;
++    }
++    public static final class id {
++        public static final int arrow=0x7f090002;
++        public static final int icon=0x7f090000;
++        public static final int label=0x7f090001;
++        public static final int menu_settings=0x7f090003;
++    }
++    public static final class layout {
++        public static final int activity_main=0x7f030000;
++        public static final int row=0x7f030001;
++    }
++    public static final class menu {
++        public static final int activity_main=0x7f080000;
++    }
++    public static final class string {
++        public static final int app_name=0x7f060000;
++        public static final int hello_world=0x7f060001;
++        public static final int menu_settings=0x7f060002;
++        public static final int title_activity_main=0x7f060003;
++    }
++    public static final class style {
++        public static final int AppTheme=0x7f070000;
++    }
++}
+diff --git a/ic_launcher-web.png b/ic_launcher-web.png
+new file mode 100644
+index 0000000..7d511cd
+Binary files /dev/null and b/ic_launcher-web.png differ
+diff --git a/libs/android-support-v4.jar b/libs/android-support-v4.jar
+new file mode 100644
+index 0000000..018c127
+Binary files /dev/null and b/libs/android-support-v4.jar differ
+diff --git a/proguard-project.txt b/proguard-project.txt
+new file mode 100644
+index 0000000..f2fe155
+--- /dev/null
++++ b/proguard-project.txt
+@@ -0,0 +1,20 @@
++# To enable ProGuard in your project, edit project.properties
++# to define the proguard.config property as described in that file.
++#
++# Add project specific ProGuard rules here.
++# By default, the flags in this file are appended to flags specified
++# in ${sdk.dir}/tools/proguard/proguard-android.txt
++# You can edit the include path and order by changing the ProGuard
++# include property in project.properties.
++#
++# For more details, see
++#   http://developer.android.com/guide/developing/tools/proguard.html
++
++# Add any project specific keep options here:
++
++# If your project uses WebView with JS, uncomment the following
++# and specify the fully qualified class name to the JavaScript interface
++# class:
++#-keepclassmembers class fqcn.of.javascript.interface.for.webview {
++#   public *;
++#}
+diff --git a/project.properties b/project.properties
+new file mode 100644
+index 0000000..b7c2081
+--- /dev/null
++++ b/project.properties
+@@ -0,0 +1,14 @@
++# This file is automatically generated by Android Tools.
++# Do not modify this file -- YOUR CHANGES WILL BE ERASED!
++#
++# This file must be checked in Version Control Systems.
++#
++# To customize properties used by the Ant build system edit
++# "ant.properties", and override values to adapt the script to your
++# project structure.
++#
++# To enable ProGuard to shrink and obfuscate your code, uncomment this (available properties: sdk.dir, user.home):
++#proguard.config=${sdk.dir}/tools/proguard/proguard-android.txt:proguard-project.txt
++
++# Project target.
++target=android-10
+diff --git a/res/drawable-hdpi/airport.png b/res/drawable-hdpi/airport.png
+new file mode 100644
+index 0000000..ff61f79
+Binary files /dev/null and b/res/drawable-hdpi/airport.png differ
+diff --git a/res/drawable-hdpi/arrow.png b/res/drawable-hdpi/arrow.png
+new file mode 100644
+index 0000000..9686dd1
+Binary files /dev/null and b/res/drawable-hdpi/arrow.png differ
+diff --git a/res/drawable-hdpi/ic_action_search.png b/res/drawable-hdpi/ic_action_search.png
+new file mode 100644
+index 0000000..67de12d
+Binary files /dev/null and b/res/drawable-hdpi/ic_action_search.png differ
+diff --git a/res/drawable-hdpi/ic_launcher.png b/res/drawable-hdpi/ic_launcher.png
+new file mode 100644
+index 0000000..f69e627
+Binary files /dev/null and b/res/drawable-hdpi/ic_launcher.png differ
+diff --git a/res/drawable-ldpi/ic_launcher.png b/res/drawable-ldpi/ic_launcher.png
+new file mode 100644
+index 0000000..ffbcce6
+Binary files /dev/null and b/res/drawable-ldpi/ic_launcher.png differ
+diff --git a/res/drawable-mdpi/ic_action_search.png b/res/drawable-mdpi/ic_action_search.png
+new file mode 100644
+index 0000000..134d549
+Binary files /dev/null and b/res/drawable-mdpi/ic_action_search.png differ
+diff --git a/res/drawable-mdpi/ic_launcher.png b/res/drawable-mdpi/ic_launcher.png
+new file mode 100644
+index 0000000..543276f
+Binary files /dev/null and b/res/drawable-mdpi/ic_launcher.png differ
+diff --git a/res/drawable-xhdpi/ic_action_search.png b/res/drawable-xhdpi/ic_action_search.png
+new file mode 100644
+index 0000000..d699c6b
+Binary files /dev/null and b/res/drawable-xhdpi/ic_action_search.png differ
+diff --git a/res/drawable-xhdpi/ic_launcher.png b/res/drawable-xhdpi/ic_launcher.png
+new file mode 100644
+index 0000000..8a0e3ea
+Binary files /dev/null and b/res/drawable-xhdpi/ic_launcher.png differ
+diff --git a/res/layout/activity_main.xml b/res/layout/activity_main.xml
+new file mode 100644
+index 0000000..10b003a
+--- /dev/null
++++ b/res/layout/activity_main.xml
+@@ -0,0 +1,19 @@
++<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:tools="http://schemas.android.com/tools"
++    android:layout_width="fill_parent"
++    android:layout_height="fill_parent" 
++    android:orientation="vertical"
++    android:background="@color/grey">
++
++    <ListView android:id="@android:id/list"
++        android:layout_width="fill_parent"
++        android:layout_height="fill_parent"
++        android:drawSelectorOnTop="false"
++        android:background="@color/white"
++        android:layout_marginLeft="20px"
++        android:layout_marginTop="20px"
++        android:layout_marginRight="20px"
++        android:layout_marginBottom="20px">
++    </ListView>
++
++</LinearLayout>
+diff --git a/res/layout/row.xml b/res/layout/row.xml
+new file mode 100644
+index 0000000..e50bde3
+--- /dev/null
++++ b/res/layout/row.xml
+@@ -0,0 +1,33 @@
++<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    android:layout_width="match_parent"
++    android:layout_height="wrap_content"
++    android:orientation="horizontal" >
++
++    <ImageView
++        android:id="@+id/icon"
++        android:layout_width="22px"
++        android:layout_height="wrap_content"
++        android:paddingLeft="2px"
++        android:paddingRight="2px"
++        android:paddingTop="8px"
++        android:src="@drawable/airport" >
++    </ImageView>
++
++    <TextView
++        android:id="@+id/label"
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:textSize="20sp" 
++        android:layout_toRightOf="@id/icon"/>
++    
++    <ImageView
++        android:id="@+id/arrow"
++        android:layout_width="22px"
++        android:layout_height="wrap_content"
++        android:paddingTop="10px"
++        android:src="@drawable/arrow"
++        android:layout_toRightOf="@id/label"
++        android:layout_alignParentRight="true">
++    </ImageView>
++
++</RelativeLayout>
+\ No newline at end of file
+diff --git a/res/menu/activity_main.xml b/res/menu/activity_main.xml
+new file mode 100644
+index 0000000..44a11e7
+--- /dev/null
++++ b/res/menu/activity_main.xml
+@@ -0,0 +1,5 @@
++<menu xmlns:android="http://schemas.android.com/apk/res/android">
++    <item android:id="@+id/menu_settings"
++        android:title="@string/menu_settings"
++        android:orderInCategory="100" />
++</menu>
+diff --git a/res/values-large/dimens.xml b/res/values-large/dimens.xml
+new file mode 100644
+index 0000000..5c4a502
+--- /dev/null
++++ b/res/values-large/dimens.xml
+@@ -0,0 +1,7 @@
++<resources>
++
++    <dimen name="padding_small">8dp</dimen>
++    <dimen name="padding_medium">16dp</dimen>
++    <dimen name="padding_large">16dp</dimen>
++
++</resources>
+\ No newline at end of file
+diff --git a/res/values/color.xml b/res/values/color.xml
+new file mode 100644
+index 0000000..3bf861c
+--- /dev/null
++++ b/res/values/color.xml
+@@ -0,0 +1,5 @@
++<?xml version="1.0" encoding="utf-8"?>
++<resources>
++    <color name="grey">#808080</color>
++    <color name="white">#FFFFFF</color>
++</resources>
+\ No newline at end of file
+diff --git a/res/values/dimens.xml b/res/values/dimens.xml
+new file mode 100644
+index 0000000..ec96646
+--- /dev/null
++++ b/res/values/dimens.xml
+@@ -0,0 +1,7 @@
++<resources>
++
++    <dimen name="padding_small">8dp</dimen>
++    <dimen name="padding_medium">8dp</dimen>
++    <dimen name="padding_large">16dp</dimen>
++
++</resources>
+\ No newline at end of file
+diff --git a/res/values/strings.xml b/res/values/strings.xml
+new file mode 100644
+index 0000000..8ecd079
+--- /dev/null
++++ b/res/values/strings.xml
+@@ -0,0 +1,8 @@
++<resources>
++
++    <string name="app_name">BookstoreMB</string>
++    <string name="hello_world">Hello world!</string>
++    <string name="menu_settings">Settings</string>
++    <string name="title_activity_main">Book Store</string>
++
++</resources>
+\ No newline at end of file
+diff --git a/res/values/styles.xml b/res/values/styles.xml
+new file mode 100644
+index 0000000..4dba0d0
+--- /dev/null
++++ b/res/values/styles.xml
+@@ -0,0 +1,5 @@
++<resources>
++
++    <style name="AppTheme" parent="android:Theme.Light" />
++
++</resources>
+\ No newline at end of file
+diff --git a/src/com/example/bookstoremb/MainActivity.java b/src/com/example/bookstoremb/MainActivity.java
+new file mode 100644
+index 0000000..5139572
+--- /dev/null
++++ b/src/com/example/bookstoremb/MainActivity.java
+@@ -0,0 +1,37 @@
++package com.example.bookstoremb;
++
++import android.app.ListActivity;
++import android.os.Bundle;
++import android.view.Menu;
++import android.view.View;
++import android.widget.ArrayAdapter;
++import android.widget.ListView;
++import android.widget.TextView;
++
++public class MainActivity extends ListActivity {
++
++    TextView selection;
++    String[] items = {"Alice in wonderland", "Jouney to the West", "Shelock Holme", "The Mask"};
++  
++    @Override
++    public void onCreate(Bundle savedInstanceState) {
++        super.onCreate(savedInstanceState);
++        setContentView(R.layout.activity_main);
++        setListAdapter(new ArrayAdapter<String>(this, R.layout.row, R.id.label, items));
++    }
++
++    @Override
++    public boolean onCreateOptionsMenu(Menu menu) {
++        getMenuInflater().inflate(R.menu.activity_main, menu);
++        return true;
++    }
++
++    /* (non-Javadoc)
++     * @see android.app.ListActivity#onListItemClick(android.widget.ListView, android.view.View, int, long)
++     */
++    @Override
++    protected void onListItemClick(ListView l, View v, int position, long id) {
++      super.onListItemClick(l, v, position, id);
++    }
++    
++}

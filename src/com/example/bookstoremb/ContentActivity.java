@@ -3,6 +3,12 @@
  */
 package com.example.bookstoremb;
 
+import java.io.UnsupportedEncodingException;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,8 +17,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.example.bookstoremb.adapter.BookstoreAdapter;
+import com.example.bookstoremb.models.Author;
 import com.example.bookstoremb.models.Book;
 import com.example.bookstoremb.utils.Constants;
+import com.example.bookstoremb.utils.RestClient;
 import com.example.bookstoremb.utils.Utils;
 
 /**
@@ -22,6 +31,7 @@ import com.example.bookstoremb.utils.Utils;
 public class ContentActivity extends Activity {
 
   private Book book;
+  private String SEARCH_AUTHOR = "http://192.168.1.130:8080/rest/private/bookstore/searchAuthorByBookId/";
   
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +40,7 @@ public class ContentActivity extends Activity {
 		TextView name = (TextView) findViewById(R.id.name);
 		TextView content = (TextView) findViewById(R.id.content);
 		TextView category = (TextView) findViewById(R.id.category);
+		TextView author = (TextView) findViewById(R.id.author);
 		Bundle extras = getIntent().getExtras();
 		book = new Book();
 		if (extras != null) {
@@ -42,6 +53,20 @@ public class ContentActivity extends Activity {
 		content.setText(book.getContent());
 		category.setText(Utils.bookCategoryEnumToString(book.getCategory()));
 		content.setMovementMethod(new ScrollingMovementMethod());
+		Author au = new Author();
+		try {
+		  RestClient rest = new RestClient(SEARCH_AUTHOR + book.getBookId());
+      rest.execute(RestClient.RequestMethod.GET);
+      if (rest.getResponseCode() == 200) {
+        JSONObject json = new JSONObject(rest.getResponseStr());
+        au = Utils.createAuthorFromJSON(json);
+      }
+    } catch (UnsupportedEncodingException e) {
+      e.printStackTrace();
+    } catch (JSONException e) {
+      e.printStackTrace();
+    }
+		author.setText(au.getName());
 	}
 
 	/* (non-Javadoc)

@@ -1,0 +1,405 @@
+commit eeb065a38bc6551e91e2536bda59891984a1c92d
+Author: BinhNV <binhnv@exoplatform.com>
+Date:   Fri Jul 27 18:20:07 2012 +0700
+
+    commit code for add new model
+
+diff --git a/bin/classes/com/example/bookstoremb/models/Author.class b/bin/classes/com/example/bookstoremb/models/Author.class
+new file mode 100644
+index 0000000..e0ac4f3
+Binary files /dev/null and b/bin/classes/com/example/bookstoremb/models/Author.class differ
+diff --git a/bin/classes/com/example/bookstoremb/models/Book$CATEGORY.class b/bin/classes/com/example/bookstoremb/models/Book$CATEGORY.class
+new file mode 100644
+index 0000000..5c799b0
+Binary files /dev/null and b/bin/classes/com/example/bookstoremb/models/Book$CATEGORY.class differ
+diff --git a/bin/classes/com/example/bookstoremb/models/Book.class b/bin/classes/com/example/bookstoremb/models/Book.class
+new file mode 100644
+index 0000000..2a46e90
+Binary files /dev/null and b/bin/classes/com/example/bookstoremb/models/Book.class differ
+diff --git a/bin/classes/com/example/bookstoremb/models/User.class b/bin/classes/com/example/bookstoremb/models/User.class
+new file mode 100644
+index 0000000..5b91f1d
+Binary files /dev/null and b/bin/classes/com/example/bookstoremb/models/User.class differ
+diff --git a/src/com/example/bookstoremb/models/Author.java b/src/com/example/bookstoremb/models/Author.java
+new file mode 100644
+index 0000000..a2edf7f
+--- /dev/null
++++ b/src/com/example/bookstoremb/models/Author.java
+@@ -0,0 +1,108 @@
++/*
++ * Copyright (C) 2003-2012 eXo Platform SAS.
++ *
++ * This program is free software: you can redistribute it and/or modify
++ * it under the terms of the GNU Affero General Public License as published by
++ * the Free Software Foundation, either version 3 of the License, or
++ * (at your option) any later version.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ * GNU Affero General Public License for more details.
++ *
++ * You should have received a copy of the GNU Affero General Public License
++ * along with this program. If not, see <http://www.gnu.org/licenses/>.
++ */
++package com.example.bookstoremb.models;
++
++/**
++ * Created by The eXo Platform SAS
++ * Author : BinhNV
++ *          binhnv@exoplatform.com
++ * Jul 13, 2012  
++ */
++public class Author {
++
++  private String authorId;
++  private String name;
++  private String address;
++  private String phone;
++  
++  /**
++   * Author constructor without param
++   */
++  public Author() {
++    
++  }
++  
++  /**
++   * Author constructor with param
++   * 
++   * @param name The name of author
++   * @param address The address of author
++   * @param phone The phone of author
++   */
++  public Author(String name, String address, String phone) {
++    this.name = name;
++    this.address = address;
++    this.phone = phone;
++  }
++
++  /**
++   * @return the name
++   */
++  public String getName() {
++    return name;
++  }
++
++  /**
++   * @param name the name to set
++   */
++  public void setName(String name) {
++    this.name = name;
++  }
++
++  /**
++   * @return the address
++   */
++  public String getAddress() {
++    return address;
++  }
++
++  /**
++   * @param address the address to set
++   */
++  public void setAddress(String address) {
++    this.address = address;
++  }
++
++  /**
++   * @return the phone
++   */
++  public String getPhone() {
++    return phone;
++  }
++
++  /**
++   * @param phone the phone to set
++   */
++  public void setPhone(String phone) {
++    this.phone = phone;
++  }
++
++  /**
++   * @return the authorId
++   */
++  public String getAuthorId() {
++    return authorId;
++  }
++
++  /**
++   * @param authorId the authorId to set
++   */
++  public void setAuthorId(String authorId) {
++    this.authorId = authorId;
++  }
++
++}
+diff --git a/src/com/example/bookstoremb/models/Book.java b/src/com/example/bookstoremb/models/Book.java
+new file mode 100644
+index 0000000..17c8c03
+--- /dev/null
++++ b/src/com/example/bookstoremb/models/Book.java
+@@ -0,0 +1,115 @@
++/*
++ * Copyright (C) 2003-2012 eXo Platform SAS.
++ *
++ * This program is free software: you can redistribute it and/or modify
++ * it under the terms of the GNU Affero General Public License as published by
++ * the Free Software Foundation, either version 3 of the License, or
++ * (at your option) any later version.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ * GNU Affero General Public License for more details.
++ *
++ * You should have received a copy of the GNU Affero General Public License
++ * along with this program. If not, see <http://www.gnu.org/licenses/>.
++ */
++package com.example.bookstoremb.models;
++
++
++/**
++ * Created by The eXo Platform SAS
++ * Author : BinhNV
++ *          binhnv@exoplatform.com
++ * Jul 5, 2012  
++ */
++public class Book {
++
++  /* Define book category */
++  public enum CATEGORY {
++    NOVEL, MANGA, COMICS, TECHNICAL, MATHS, HISTORY
++  }
++  /* id of book */
++  private String bookId;
++  /* name of book */
++  private String name;
++  /*category of book*/
++  private CATEGORY category;
++  /* content of book */
++  private String content;
++  
++  /**
++   * Book constructor
++   * 
++   */
++  public Book() {
++    
++  }
++  
++  /**
++   * Book constructor
++   * 
++   * @param name The name of book
++   * @param category The category of book
++   * @param content The content of book
++   * 
++   */
++  public Book(String name, CATEGORY category, String content) {
++    this.name = name;
++    this.category = category;
++    this.content = content;
++  }
++  
++  
++  /**
++   * @return the name
++   */
++  public String getName() {
++    return name;
++  }
++  /**
++   * @param name the name to set
++   */
++  public void setName(String name) {
++    this.name = name;
++  }
++  /**
++   * @return the category
++   */
++  public CATEGORY getCategory() {
++    return category;
++  }
++  /**
++   * @param category the category to set
++   */
++  public void setCategory(CATEGORY category) {
++    this.category = category;
++  }
++  /**
++   * @return the content
++   */
++  public String getContent() {
++    return content;
++  }
++  /**
++   * @param content the content to set
++   */
++  public void setContent(String content) {
++    this.content = content;
++  }
++
++  /**
++   * @return the bookId
++   */
++  public String getBookId() {
++    return bookId;
++  }
++
++  /**
++   * @param bookId the bookId to set
++   */
++  public void setBookId(String bookId) {
++    this.bookId = bookId;
++  }
++  
++}
+diff --git a/src/com/example/bookstoremb/models/User.java b/src/com/example/bookstoremb/models/User.java
+new file mode 100644
+index 0000000..98e67b4
+--- /dev/null
++++ b/src/com/example/bookstoremb/models/User.java
+@@ -0,0 +1,142 @@
++/*
++ * Copyright (C) 2003-2012 eXo Platform SAS.
++ *
++ * This program is free software: you can redistribute it and/or modify
++ * it under the terms of the GNU Affero General Public License as published by
++ * the Free Software Foundation, either version 3 of the License, or
++ * (at your option) any later version.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ * GNU Affero General Public License for more details.
++ *
++ * You should have received a copy of the GNU Affero General Public License
++ * along with this program. If not, see <http://www.gnu.org/licenses/>.
++ */
++package com.example.bookstoremb.models;
++
++/**
++ * Created by The eXo Platform SAS
++ * Author : BinhNV
++ *          binhnv@exoplatform.com
++ * Jul 16, 2012  
++ */
++public class User {
++
++  private String userId;
++  private String username;
++  private String password;
++  private String fullname;
++  private String address;
++  private String phone;
++  
++  /**
++   * User constructor without parameter
++   */
++  public User() {
++    
++  }
++  
++  /**
++   * User constructor with parameter
++   * 
++   * @param username
++   * @param password
++   * @param fullname
++   * @param address
++   * @param phone
++   */
++  public User(String username, String password, String fullname, String address, String phone) {
++    this.username = username;
++    this.password = password;
++    this.fullname = fullname;
++    this.address = address;
++    this.phone = phone;
++  }
++
++  /**
++   * @return the username
++   */
++  public String getUsername() {
++    return username;
++  }
++
++  /**
++   * @param username the username to set
++   */
++  public void setUsername(String username) {
++    this.username = username;
++  }
++
++  /**
++   * @return the password
++   */
++  public String getPassword() {
++    return password;
++  }
++
++  /**
++   * @param password the password to set
++   */
++  public void setPassword(String password) {
++    this.password = password;
++  }
++
++  /**
++   * @return the fullname
++   */
++  public String getFullname() {
++    return fullname;
++  }
++
++  /**
++   * @param fullname the fullname to set
++   */
++  public void setFullname(String fullname) {
++    this.fullname = fullname;
++  }
++
++  /**
++   * @return the address
++   */
++  public String getAddress() {
++    return address;
++  }
++
++  /**
++   * @param address the address to set
++   */
++  public void setAddress(String address) {
++    this.address = address;
++  }
++
++  /**
++   * @return the phone
++   */
++  public String getPhone() {
++    return phone;
++  }
++
++  /**
++   * @param phone the phone to set
++   */
++  public void setPhone(String phone) {
++    this.phone = phone;
++  }
++
++  /**
++   * @return the userId
++   */
++  public String getUserId() {
++    return userId;
++  }
++
++  /**
++   * @param userId the userId to set
++   */
++  public void setUserId(String userId) {
++    this.userId = userId;
++  }
++
++}

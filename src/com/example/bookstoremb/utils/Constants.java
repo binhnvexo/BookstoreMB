@@ -29,6 +29,7 @@ public class Constants {
   public static final int MENU_EDIT = Menu.FIRST + 1;
   public static final int MENU_BACK = Menu.FIRST + 2;
   public static final int MENU_CLOSE = Menu.FIRST + 3;
+  public static final int MENU_SEARCH = Menu.FIRST + 4;
   
   public static final String BOOK_ID = "bookId";
   public static final String BOOK_NAME = "name";

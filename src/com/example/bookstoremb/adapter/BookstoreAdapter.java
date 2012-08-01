@@ -29,6 +29,7 @@ import android.widget.TextView;
 
 import com.example.bookstoremb.MainActivity;
 import com.example.bookstoremb.R;
+import com.example.bookstoremb.models.Book;
 
 /**
  * Created by The eXo Platform SAS
@@ -39,13 +40,13 @@ import com.example.bookstoremb.R;
 public class BookstoreAdapter extends BaseAdapter {
 
   private MainActivity activity;
-  private List<String> arr = new ArrayList<String>();
+  private List<Book> arr = new ArrayList<Book>();
   private static LayoutInflater inflater;
   
   /**
    * 
    */
-  public BookstoreAdapter(MainActivity activity, List<String> arr) {
+  public BookstoreAdapter(MainActivity activity, List<Book> arr) {
     this.activity = activity;
     this.arr = arr;
     inflater = LayoutInflater.from(activity);
@@ -89,16 +90,16 @@ public class BookstoreAdapter extends BaseAdapter {
       holder = (ViewHolder) convertView.getTag();
     }
     holder.textView = (TextView) convertView.findViewById(R.id.label);
-    holder.textView.setText(arr.get(position));
+    holder.textView.setText(arr.get(position).getName());
     RelativeLayout listRow = (RelativeLayout) convertView.findViewById(R.id.list_row); 
-    if (position == 0) {
+//    if (position == 0) {
 //      listRow.setBackgroundResource(R.drawable.celltop);
 //      listRow.setBackgroundColor(Color.RED);
-    }
-    if (position == (arr.size() - 1)) {
+//    }
+//    if (position == (arr.size() - 1)) {
 //      listRow.setBackgroundResource(R.drawable.cellbottom);
 //      listRow.setBackgroundColor(Color.GREEN);
-    }
+//    }
     return convertView;
   }
   

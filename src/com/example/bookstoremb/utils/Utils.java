@@ -19,6 +19,7 @@ package com.example.bookstoremb.utils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.example.bookstoremb.models.Author;
 import com.example.bookstoremb.models.Book;
 
 /**
@@ -59,6 +60,15 @@ public class Utils {
     book.setCategory(Utils.bookCategoryStringToEnum(json.getString("category")));
     book.setContent(json.getString("content"));
     return book;
+  }
+  
+  public static Author createAuthorFromJSON(JSONObject json) throws JSONException {
+    Author author = new Author();
+    author.setAuthorId(json.getString("authorId"));
+    author.setName(json.getString("name"));
+    author.setAddress(json.getString("address"));
+    author.setPhone(json.getString("phone"));
+    return author;
   }
   
 }

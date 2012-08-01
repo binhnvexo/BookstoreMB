@@ -1,0 +1,158 @@
+commit 5da0d39f1dd8e8eadf88767a470369173413d897
+Author: BinhVN <binhnv@exoplatform.com>
+Date:   Mon Jul 30 23:23:04 2012 +0700
+
+    commit new image
+
+diff --git a/bin/BookstoreMB.apk b/bin/BookstoreMB.apk
+index 621927c..5b00994 100644
+Binary files a/bin/BookstoreMB.apk and b/bin/BookstoreMB.apk differ
+diff --git a/bin/classes.dex b/bin/classes.dex
+index 796f28e..a990738 100644
+Binary files a/bin/classes.dex and b/bin/classes.dex differ
+diff --git a/bin/classes/com/example/bookstoremb/MainActivity.class b/bin/classes/com/example/bookstoremb/MainActivity.class
+index c017169..a1211b9 100644
+Binary files a/bin/classes/com/example/bookstoremb/MainActivity.class and b/bin/classes/com/example/bookstoremb/MainActivity.class differ
+diff --git a/bin/classes/com/example/bookstoremb/R$drawable.class b/bin/classes/com/example/bookstoremb/R$drawable.class
+index 5a6403a..f696329 100644
+Binary files a/bin/classes/com/example/bookstoremb/R$drawable.class and b/bin/classes/com/example/bookstoremb/R$drawable.class differ
+diff --git a/bin/classes/com/example/bookstoremb/R$id.class b/bin/classes/com/example/bookstoremb/R$id.class
+index dcffa59..eb431aa 100644
+Binary files a/bin/classes/com/example/bookstoremb/R$id.class and b/bin/classes/com/example/bookstoremb/R$id.class differ
+diff --git a/bin/classes/com/example/bookstoremb/R$layout.class b/bin/classes/com/example/bookstoremb/R$layout.class
+index 68ef90d..8d212a3 100644
+Binary files a/bin/classes/com/example/bookstoremb/R$layout.class and b/bin/classes/com/example/bookstoremb/R$layout.class differ
+diff --git a/bin/classes/com/example/bookstoremb/R$menu.class b/bin/classes/com/example/bookstoremb/R$menu.class
+index f2a4106..2b6b420 100644
+Binary files a/bin/classes/com/example/bookstoremb/R$menu.class and b/bin/classes/com/example/bookstoremb/R$menu.class differ
+diff --git a/bin/classes/com/example/bookstoremb/R$string.class b/bin/classes/com/example/bookstoremb/R$string.class
+index ffe3f22..efb8902 100644
+Binary files a/bin/classes/com/example/bookstoremb/R$string.class and b/bin/classes/com/example/bookstoremb/R$string.class differ
+diff --git a/bin/classes/com/example/bookstoremb/R$style.class b/bin/classes/com/example/bookstoremb/R$style.class
+index 33838c3..ee3b8dd 100644
+Binary files a/bin/classes/com/example/bookstoremb/R$style.class and b/bin/classes/com/example/bookstoremb/R$style.class differ
+diff --git a/bin/classes/com/example/bookstoremb/adapter/BookstoreAdapter.class b/bin/classes/com/example/bookstoremb/adapter/BookstoreAdapter.class
+index 568b3f6..ad2e85c 100644
+Binary files a/bin/classes/com/example/bookstoremb/adapter/BookstoreAdapter.class and b/bin/classes/com/example/bookstoremb/adapter/BookstoreAdapter.class differ
+diff --git a/bin/res/drawable-hdpi/bglayout.9.png b/bin/res/drawable-hdpi/bglayout.9.png
+new file mode 100644
+index 0000000..11ec273
+Binary files /dev/null and b/bin/res/drawable-hdpi/bglayout.9.png differ
+diff --git a/bin/resources.ap_ b/bin/resources.ap_
+index bdad976..bcbc722 100644
+Binary files a/bin/resources.ap_ and b/bin/resources.ap_ differ
+diff --git a/gen/com/example/bookstoremb/R.java b/gen/com/example/bookstoremb/R.java
+index f675e76..bcfb20a 100644
+--- a/gen/com/example/bookstoremb/R.java
++++ b/gen/com/example/bookstoremb/R.java
+@@ -22,12 +22,13 @@ public final class R {
+     public static final class drawable {
+         public static final int airport=0x7f020000;
+         public static final int arrow=0x7f020001;
+-        public static final int cellbottom=0x7f020002;
+-        public static final int cellsingle=0x7f020003;
+-        public static final int celltop=0x7f020004;
+-        public static final int customshape=0x7f020005;
+-        public static final int ic_action_search=0x7f020006;
+-        public static final int ic_launcher=0x7f020007;
++        public static final int bglayout=0x7f020002;
++        public static final int cellbottom=0x7f020003;
++        public static final int cellsingle=0x7f020004;
++        public static final int celltop=0x7f020005;
++        public static final int customshape=0x7f020006;
++        public static final int ic_action_search=0x7f020007;
++        public static final int ic_launcher=0x7f020008;
+     }
+     public static final class id {
+         public static final int arrow=0x7f090006;
+diff --git a/res/drawable-hdpi/bglayout.9.png b/res/drawable-hdpi/bglayout.9.png
+new file mode 100644
+index 0000000..424952a
+Binary files /dev/null and b/res/drawable-hdpi/bglayout.9.png differ
+diff --git a/res/layout/activity_main.xml b/res/layout/activity_main.xml
+index db195dd..1a4aaae 100644
+--- a/res/layout/activity_main.xml
++++ b/res/layout/activity_main.xml
+@@ -3,7 +3,7 @@
+     android:layout_width="fill_parent"
+     android:layout_height="fill_parent" 
+     android:orientation="vertical"
+-    android:background="@color/grey">
++    android:background="@drawable/bglayout">
+ 
+     <TextView android:id="@+id/nocontent"
+         android:layout_width="wrap_content"
+diff --git a/src/com/example/bookstoremb/MainActivity.java b/src/com/example/bookstoremb/MainActivity.java
+index 704087f..9ed1807 100644
+--- a/src/com/example/bookstoremb/MainActivity.java
++++ b/src/com/example/bookstoremb/MainActivity.java
+@@ -4,6 +4,7 @@ import java.io.UnsupportedEncodingException;
+ import java.util.ArrayList;
+ import java.util.List;
+ 
++import org.apache.http.conn.routing.RouteInfo.TunnelType;
+ import org.json.JSONArray;
+ import org.json.JSONException;
+ import org.json.JSONObject;
+@@ -41,32 +42,35 @@ public class MainActivity extends ListActivity {
+         List<String> bookNames = new ArrayList<String>();
+         books = new ArrayList<Book>();
+         TextView nocontent = (TextView) findViewById(R.id.nocontent);
+-        try {
+-          RestClient rest = new RestClient(SEARCH_ALL_BOOK_URL);
+-          rest.execute(RestClient.RequestMethod.GET);
+-          if (rest.getResponseCode() == 200) {
+-            JSONArray jsons = (JSONArray) new JSONArray(rest.getResponseStr());
+-            for (int i = 0; i < jsons.length(); i++) {
+-              JSONObject json = jsons.getJSONObject(i);
+-              Book book = Utils.createBookFromJSON(json);
+-              books.add(book);
+-            }
+-            for (Book b : books) {
+-              bookNames.add(b.getName());
+-            }
+-            adapter = new BookstoreAdapter(this, bookNames);
+-            this.setListAdapter(adapter);
+-            nocontent.setText("");
+-          } else {
+-            adapter = new BookstoreAdapter(this, bookNames);
+-            this.setListAdapter(adapter);
+-            nocontent.setText(R.string.nocontent);
+-          }
+-        } catch (JSONException jse) {
+-          jse.printStackTrace();
+-        } catch (UnsupportedEncodingException ue) {
+-          ue.printStackTrace();
+-        }
++//        try {
++//          RestClient rest = new RestClient(SEARCH_ALL_BOOK_URL);
++//          rest.execute(RestClient.RequestMethod.GET);
++//          if (rest.getResponseCode() == 200) {
++//            JSONArray jsons = (JSONArray) new JSONArray(rest.getResponseStr());
++//            for (int i = 0; i < jsons.length(); i++) {
++//              JSONObject json = jsons.getJSONObject(i);
++//              Book book = Utils.createBookFromJSON(json);
++//              books.add(book);
++//            }
++//            for (Book b : books) {
++//              bookNames.add(b.getName());
++//            }
++//            adapter = new BookstoreAdapter(this, bookNames);
++//            this.setListAdapter(adapter);
++//            nocontent.setText("");
++//          } else {
++//            adapter = new BookstoreAdapter(this, bookNames);
++//            this.setListAdapter(adapter);
++//            nocontent.setText(R.string.nocontent);
++//          }
++//        } catch (JSONException jse) {
++//          jse.printStackTrace();
++//        } catch (UnsupportedEncodingException ue) {
++//          ue.printStackTrace();
++//        }
++        bookNames.add("ABC");
++        adapter = new BookstoreAdapter(this, bookNames);
++        this.setListAdapter(adapter);
+     }
+ 
+     /* (non-Javadoc)

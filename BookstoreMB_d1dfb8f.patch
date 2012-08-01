@@ -1,0 +1,262 @@
+commit d1dfb8f582f6f80f03c34315fd5680d118d9fabf
+Author: BinhNV <binhnv@exoplatform.com>
+Date:   Mon Jul 30 11:46:48 2012 +0700
+
+    add code with expose content of book
+
+diff --git a/bin/BookstoreMB.apk b/bin/BookstoreMB.apk
+index 5a61a0c..e0d62a9 100644
+Binary files a/bin/BookstoreMB.apk and b/bin/BookstoreMB.apk differ
+diff --git a/bin/classes.dex b/bin/classes.dex
+index 88d138f..f9980e1 100644
+Binary files a/bin/classes.dex and b/bin/classes.dex differ
+diff --git a/bin/classes/com/example/bookstoremb/ContentActivity.class b/bin/classes/com/example/bookstoremb/ContentActivity.class
+index 9bcacf8..62d1953 100644
+Binary files a/bin/classes/com/example/bookstoremb/ContentActivity.class and b/bin/classes/com/example/bookstoremb/ContentActivity.class differ
+diff --git a/bin/classes/com/example/bookstoremb/MainActivity.class b/bin/classes/com/example/bookstoremb/MainActivity.class
+index 0a5e938..0dfe949 100644
+Binary files a/bin/classes/com/example/bookstoremb/MainActivity.class and b/bin/classes/com/example/bookstoremb/MainActivity.class differ
+diff --git a/bin/classes/com/example/bookstoremb/R$id.class b/bin/classes/com/example/bookstoremb/R$id.class
+index b0e00c6..23690d7 100644
+Binary files a/bin/classes/com/example/bookstoremb/R$id.class and b/bin/classes/com/example/bookstoremb/R$id.class differ
+diff --git a/bin/classes/com/example/bookstoremb/R$layout.class b/bin/classes/com/example/bookstoremb/R$layout.class
+index bc7379a..3c2cddc 100644
+Binary files a/bin/classes/com/example/bookstoremb/R$layout.class and b/bin/classes/com/example/bookstoremb/R$layout.class differ
+diff --git a/bin/classes/com/example/bookstoremb/R$menu.class b/bin/classes/com/example/bookstoremb/R$menu.class
+index 356caad..7c5bf8e 100644
+Binary files a/bin/classes/com/example/bookstoremb/R$menu.class and b/bin/classes/com/example/bookstoremb/R$menu.class differ
+diff --git a/bin/classes/com/example/bookstoremb/R$string.class b/bin/classes/com/example/bookstoremb/R$string.class
+index 7445369..259fdb8 100644
+Binary files a/bin/classes/com/example/bookstoremb/R$string.class and b/bin/classes/com/example/bookstoremb/R$string.class differ
+diff --git a/bin/classes/com/example/bookstoremb/R$style.class b/bin/classes/com/example/bookstoremb/R$style.class
+index d968026..d203897 100644
+Binary files a/bin/classes/com/example/bookstoremb/R$style.class and b/bin/classes/com/example/bookstoremb/R$style.class differ
+diff --git a/bin/classes/com/example/bookstoremb/utils/Constants.class b/bin/classes/com/example/bookstoremb/utils/Constants.class
+index 64a4d24..c8f720a 100644
+Binary files a/bin/classes/com/example/bookstoremb/utils/Constants.class and b/bin/classes/com/example/bookstoremb/utils/Constants.class differ
+diff --git a/bin/resources.ap_ b/bin/resources.ap_
+index edb7b9a..9ae1770 100644
+Binary files a/bin/resources.ap_ and b/bin/resources.ap_ differ
+diff --git a/gen/com/example/bookstoremb/R.java b/gen/com/example/bookstoremb/R.java
+index c56cc01..f743182 100644
+--- a/gen/com/example/bookstoremb/R.java
++++ b/gen/com/example/bookstoremb/R.java
+@@ -26,11 +26,13 @@ public final class R {
+         public static final int ic_launcher=0x7f020003;
+     }
+     public static final class id {
+-        public static final int arrow=0x7f090003;
+-        public static final int icon=0x7f090001;
+-        public static final int label=0x7f090002;
+-        public static final int menu_settings=0x7f090004;
++        public static final int arrow=0x7f090005;
++        public static final int content=0x7f090001;
++        public static final int icon=0x7f090003;
++        public static final int label=0x7f090004;
++        public static final int menu_settings=0x7f090006;
+         public static final int name=0x7f090000;
++        public static final int nocontent=0x7f090002;
+     }
+     public static final class layout {
+         public static final int activity_content=0x7f030000;
+@@ -46,6 +48,7 @@ public final class R {
+         public static final int menu_back=0x7f060005;
+         public static final int menu_close=0x7f060004;
+         public static final int menu_settings=0x7f060002;
++        public static final int nocontent=0x7f060006;
+         public static final int title_activity_main=0x7f060003;
+     }
+     public static final class style {
+diff --git a/res/layout/activity_content.xml b/res/layout/activity_content.xml
+index 9aa0de8..1d8ade4 100644
+--- a/res/layout/activity_content.xml
++++ b/res/layout/activity_content.xml
+@@ -13,11 +13,16 @@
+         android:layout_marginLeft="20px"
+         android:layout_marginTop="20px"
+         android:layout_marginRight="20px"
+-        android:layout_marginBottom="20px">
++        android:layout_marginBottom="20px"
++        android:orientation="vertical">
+         
+         <TextView android:id="@+id/name"
+-	    android:layout_width="wrap_content"
+-	    android:layout_height="wrap_content"/>
++	    	android:layout_width="wrap_content"
++	    	android:layout_height="wrap_content"/>
++        
++        <TextView android:id="@+id/content"
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"/>
+         
+     </LinearLayout>
+     
+diff --git a/res/layout/activity_main.xml b/res/layout/activity_main.xml
+index 10b003a..e0def63 100644
+--- a/res/layout/activity_main.xml
++++ b/res/layout/activity_main.xml
+@@ -5,6 +5,10 @@
+     android:orientation="vertical"
+     android:background="@color/grey">
+ 
++    <TextView android:id="@+id/nocontent"
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"/>
++    
+     <ListView android:id="@android:id/list"
+         android:layout_width="fill_parent"
+         android:layout_height="fill_parent"
+diff --git a/res/values/strings.xml b/res/values/strings.xml
+index 8c513fe..f416521 100644
+--- a/res/values/strings.xml
++++ b/res/values/strings.xml
+@@ -6,5 +6,6 @@
+     <string name="title_activity_main">Book Store</string>
+     <string name="menu_close">CLOSE</string>
+     <string name="menu_back">BACK</string>
++    <string name="nocontent">No book avaialbe now</string>
+ 
+ </resources>
+\ No newline at end of file
+diff --git a/src/com/example/bookstoremb/ContentActivity.java b/src/com/example/bookstoremb/ContentActivity.java
+index e04970f..d42135e 100644
+--- a/src/com/example/bookstoremb/ContentActivity.java
++++ b/src/com/example/bookstoremb/ContentActivity.java
+@@ -3,30 +3,41 @@
+  */
+ package com.example.bookstoremb;
+ 
+-import com.example.bookstoremb.utils.Constants;
+-
+ import android.app.Activity;
+ import android.content.Intent;
+ import android.os.Bundle;
+-import android.view.ContextMenu;
+-import android.view.ContextMenu.ContextMenuInfo;
+ import android.view.Menu;
+ import android.view.MenuItem;
+-import android.view.View;
+ import android.widget.TextView;
+ 
++import com.example.bookstoremb.models.Book;
++import com.example.bookstoremb.utils.Constants;
++import com.example.bookstoremb.utils.Utils;
++
+ /**
+  * @author Administrator
+  *
+  */
+ public class ContentActivity extends Activity {
+ 
++  private Book book;
++  
+ 	@Override
+ 	protected void onCreate(Bundle savedInstanceState) {
+ 		super.onCreate(savedInstanceState);
+ 		setContentView(R.layout.activity_content);
+-		TextView str = (TextView) findViewById(R.id.name);
+-		str.setText("Hello world");
++		TextView name = (TextView) findViewById(R.id.name);
++		TextView content = (TextView) findViewById(R.id.content);
++		Bundle extras = getIntent().getExtras();
++		book = new Book();
++		if (extras != null) {
++		  book.setBookId(extras.getString(Constants.BOOK_ID));
++		  book.setName(extras.getString(Constants.BOOK_NAME));
++		  book.setCategory(Utils.bookCategoryStringToEnum(extras.getString(Constants.BOOK_CATEGORY)));
++		  book.setContent(extras.getString(Constants.BOOK_CONTENT));
++    }
++		name.setText(book.getName());
++		content.setText(book.getContent());
+ 	}
+ 
+ 	/* (non-Javadoc)
+diff --git a/src/com/example/bookstoremb/MainActivity.java b/src/com/example/bookstoremb/MainActivity.java
+index 5974b30..02f7493 100644
+--- a/src/com/example/bookstoremb/MainActivity.java
++++ b/src/com/example/bookstoremb/MainActivity.java
+@@ -17,6 +17,7 @@ import android.view.View;
+ import android.widget.ArrayAdapter;
+ import android.widget.ListView;
+ import android.widget.TextView;
++import android.widget.Toast;
+ 
+ import com.example.bookstoremb.models.Book;
+ import com.example.bookstoremb.utils.Constants;
+@@ -29,14 +30,14 @@ public class MainActivity extends ListActivity {
+     String[] items = {};
+     String SEARCH_ALL_BOOK_URL = "http://192.168.1.130:8080/rest/private/bookstore/searchAllBook";
+     String result;
+-    String username = "root";
+-    String password = "gtn";
++    List<Book> books;
+     
+     @Override
+     public void onCreate(Bundle savedInstanceState) {
+         super.onCreate(savedInstanceState);
+         setContentView(R.layout.activity_main);
+-        List<Book> books = new ArrayList<Book>();
++        books = new ArrayList<Book>();
++        TextView nocontent = (TextView) findViewById(R.id.nocontent);
+         try {
+           RestClient rest = new RestClient(SEARCH_ALL_BOOK_URL);
+           rest.execute(RestClient.RequestMethod.GET);
+@@ -47,18 +48,22 @@ public class MainActivity extends ListActivity {
+               Book book = Utils.createBookFromJSON(json);
+               books.add(book);
+             }
++            List<String> bookNames = new ArrayList<String>();
++            for (Book b : books) {
++              bookNames.add(b.getName());
++            }
++            items = bookNames.toArray(new String[bookNames.size()]);
++            setListAdapter(new ArrayAdapter<String>(this, R.layout.row, R.id.label, items));
++            nocontent.setText("");
++          } else {
++            setListAdapter(new ArrayAdapter<String>(this, R.layout.row, R.id.label, items));
++            nocontent.setText(R.string.nocontent);
+           }
+         } catch (JSONException jse) {
+           jse.printStackTrace();
+         } catch (UnsupportedEncodingException ue) {
+           ue.printStackTrace();
+         }
+-        List<String> bookNames = new ArrayList<String>();
+-        for (Book b : books) {
+-          bookNames.add(b.getName());
+-        }
+-        items = bookNames.toArray(new String[bookNames.size()]);
+-        setListAdapter(new ArrayAdapter<String>(this, R.layout.row, R.id.label, items));
+     }
+ 
+     /* (non-Javadoc)
+@@ -67,7 +72,15 @@ public class MainActivity extends ListActivity {
+     @Override
+     protected void onListItemClick(ListView l, View v, int position, long id) {
+       super.onListItemClick(l, v, position, id);
++      Book book = new Book();
++      book = books.get(position);
++      
+       Intent intent = new Intent(this, ContentActivity.class);
++      intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
++      intent.putExtra(Constants.BOOK_ID, book.getBookId());
++      intent.putExtra(Constants.BOOK_NAME, book.getName());
++      intent.putExtra(Constants.BOOK_CATEGORY, book.getCategory());
++      intent.putExtra(Constants.BOOK_CONTENT, book.getContent());
+       startActivity(intent);
+     }
+     
+diff --git a/src/com/example/bookstoremb/utils/Constants.java b/src/com/example/bookstoremb/utils/Constants.java
+index bffa3b1..3bb9c89 100644
+--- a/src/com/example/bookstoremb/utils/Constants.java
++++ b/src/com/example/bookstoremb/utils/Constants.java
+@@ -30,4 +30,9 @@ public class Constants {
+   public static final int MENU_BACK = Menu.FIRST + 2;
+   public static final int MENU_CLOSE = Menu.FIRST + 3;
+   
++  public static final String BOOK_ID = "bookId";
++  public static final String BOOK_NAME = "name";
++  public static final String BOOK_CATEGORY = "category";
++  public static final String BOOK_CONTENT = "content";
++  
+ }

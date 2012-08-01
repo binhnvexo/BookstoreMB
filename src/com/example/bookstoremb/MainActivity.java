@@ -16,7 +16,9 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -39,9 +41,7 @@ public class MainActivity extends ListActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         BookstoreAdapter adapter;
-        List<String> bookNames = new ArrayList<String>();
         books = new ArrayList<Book>();
-//        TextView nocontent = (TextView) findViewById(R.id.nocontent);
         try {
           RestClient rest = new RestClient(SEARCH_ALL_BOOK_URL);
           rest.execute(RestClient.RequestMethod.GET);
@@ -51,17 +51,19 @@ public class MainActivity extends ListActivity {
               JSONObject json = jsons.getJSONObject(i);
               Book book = Utils.createBookFromJSON(json);
               books.add(book);
+              
             }
-            for (Book b : books) {
-              bookNames.add(b.getName());
-            }
-            adapter = new BookstoreAdapter(this, bookNames);
+            adapter = new BookstoreAdapter(this, books);
             this.setListAdapter(adapter);
-//            nocontent.setText("");
           } else {
-            adapter = new BookstoreAdapter(this, bookNames);
+            adapter = new BookstoreAdapter(this, books);
             this.setListAdapter(adapter);
-//            nocontent.setText(R.string.nocontent);
+            LinearLayout main = (LinearLayout) findViewById(R.id.main);
+            TextView nocontent = new TextView(this);
+            nocontent.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+            nocontent.setText(R.string.nocontent);
+            main.removeAllViews();
+            main.addView(nocontent);
           }
         } catch (JSONException jse) {
           jse.printStackTrace();
@@ -94,6 +96,7 @@ public class MainActivity extends ListActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
       menu.add(menu.NONE, Constants.MENU_CLOSE, menu.NONE, R.string.menu_close);
+      menu.add(menu.NONE, Constants.MENU_SEARCH, menu.NONE, R.string.menu_search);
       return super.onCreateOptionsMenu(menu);
     }
 
@@ -102,8 +105,12 @@ public class MainActivity extends ListActivity {
      */
     @Override
     public boolean onMenuItemSelected(int featureId, MenuItem item) {
-      if (Constants.MENU_CLOSE == item.getItemId()) {
+      switch (item.getItemId()) {
+      case Constants.MENU_CLOSE:
         finish();
+        break;
+      case Constants.MENU_SEARCH:
+        break;
       }
       return super.onMenuItemSelected(featureId, item);
     }

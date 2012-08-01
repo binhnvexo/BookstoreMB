@@ -6,6 +6,7 @@
     <string name="title_activity_main">Book Store</string>
     <string name="menu_close">CLOSE</string>
     <string name="menu_back">BACK</string>
+    <string name="menu_search">SEARCH</string>
     <string name="nocontent">No book avaialbe now</string>
 
 </resources>

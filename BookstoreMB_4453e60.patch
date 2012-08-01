@@ -1,0 +1,530 @@
+commit 4453e603be9bdb631fd0e5b50aad077fe982a163
+Author: BinhNV <binhnv@exoplatform.com>
+Date:   Tue Jul 31 17:40:08 2012 +0700
+
+    commit all code with interface
+
+diff --git a/bin/BookstoreMB.apk b/bin/BookstoreMB.apk
+index 5b00994..dc5f671 100644
+Binary files a/bin/BookstoreMB.apk and b/bin/BookstoreMB.apk differ
+diff --git a/bin/classes.dex b/bin/classes.dex
+index a990738..6915ec1 100644
+Binary files a/bin/classes.dex and b/bin/classes.dex differ
+diff --git a/bin/classes/com/example/bookstoremb/ContentActivity.class b/bin/classes/com/example/bookstoremb/ContentActivity.class
+index 62d1953..facc925 100644
+Binary files a/bin/classes/com/example/bookstoremb/ContentActivity.class and b/bin/classes/com/example/bookstoremb/ContentActivity.class differ
+diff --git a/bin/classes/com/example/bookstoremb/MainActivity.class b/bin/classes/com/example/bookstoremb/MainActivity.class
+index a1211b9..ef13b20 100644
+Binary files a/bin/classes/com/example/bookstoremb/MainActivity.class and b/bin/classes/com/example/bookstoremb/MainActivity.class differ
+diff --git a/bin/classes/com/example/bookstoremb/R$drawable.class b/bin/classes/com/example/bookstoremb/R$drawable.class
+index f696329..39c7a9f 100644
+Binary files a/bin/classes/com/example/bookstoremb/R$drawable.class and b/bin/classes/com/example/bookstoremb/R$drawable.class differ
+diff --git a/bin/classes/com/example/bookstoremb/R$id.class b/bin/classes/com/example/bookstoremb/R$id.class
+index eb431aa..24a5513 100644
+Binary files a/bin/classes/com/example/bookstoremb/R$id.class and b/bin/classes/com/example/bookstoremb/R$id.class differ
+diff --git a/bin/classes/com/example/bookstoremb/R$layout.class b/bin/classes/com/example/bookstoremb/R$layout.class
+index 8d212a3..451eda5 100644
+Binary files a/bin/classes/com/example/bookstoremb/R$layout.class and b/bin/classes/com/example/bookstoremb/R$layout.class differ
+diff --git a/bin/classes/com/example/bookstoremb/R$menu.class b/bin/classes/com/example/bookstoremb/R$menu.class
+index 2b6b420..41344c5 100644
+Binary files a/bin/classes/com/example/bookstoremb/R$menu.class and b/bin/classes/com/example/bookstoremb/R$menu.class differ
+diff --git a/bin/classes/com/example/bookstoremb/R$string.class b/bin/classes/com/example/bookstoremb/R$string.class
+index efb8902..27a675a 100644
+Binary files a/bin/classes/com/example/bookstoremb/R$string.class and b/bin/classes/com/example/bookstoremb/R$string.class differ
+diff --git a/bin/classes/com/example/bookstoremb/R$style.class b/bin/classes/com/example/bookstoremb/R$style.class
+index ee3b8dd..35e30d8 100644
+Binary files a/bin/classes/com/example/bookstoremb/R$style.class and b/bin/classes/com/example/bookstoremb/R$style.class differ
+diff --git a/bin/classes/com/example/bookstoremb/adapter/BookstoreAdapter.class b/bin/classes/com/example/bookstoremb/adapter/BookstoreAdapter.class
+index ad2e85c..86fe4a8 100644
+Binary files a/bin/classes/com/example/bookstoremb/adapter/BookstoreAdapter.class and b/bin/classes/com/example/bookstoremb/adapter/BookstoreAdapter.class differ
+diff --git a/bin/classes/com/example/bookstoremb/view/LineTextView.class b/bin/classes/com/example/bookstoremb/view/LineTextView.class
+new file mode 100644
+index 0000000..4cfc6c9
+Binary files /dev/null and b/bin/classes/com/example/bookstoremb/view/LineTextView.class differ
+diff --git a/bin/res/drawable-hdpi/background.png b/bin/res/drawable-hdpi/background.png
+new file mode 100644
+index 0000000..d7524c6
+Binary files /dev/null and b/bin/res/drawable-hdpi/background.png differ
+diff --git a/bin/res/drawable-hdpi/bglayout.9.png b/bin/res/drawable-hdpi/bglayout.9.png
+deleted file mode 100644
+index 11ec273..0000000
+Binary files a/bin/res/drawable-hdpi/bglayout.9.png and /dev/null differ
+diff --git a/bin/res/drawable-hdpi/cellsingle.9.png b/bin/res/drawable-hdpi/cellsingle.9.png
+index 73aaa2f..73a6d4c 100644
+Binary files a/bin/res/drawable-hdpi/cellsingle.9.png and b/bin/res/drawable-hdpi/cellsingle.9.png differ
+diff --git a/bin/res/drawable-hdpi/celltop.9.png b/bin/res/drawable-hdpi/celltop.9.png
+index c58d919..f671a69 100644
+Binary files a/bin/res/drawable-hdpi/celltop.9.png and b/bin/res/drawable-hdpi/celltop.9.png differ
+diff --git a/bin/resources.ap_ b/bin/resources.ap_
+index bcbc722..751e11c 100644
+Binary files a/bin/resources.ap_ and b/bin/resources.ap_ differ
+diff --git a/gen/com/example/bookstoremb/R.java b/gen/com/example/bookstoremb/R.java
+index bcfb20a..2668781 100644
+--- a/gen/com/example/bookstoremb/R.java
++++ b/gen/com/example/bookstoremb/R.java
+@@ -22,23 +22,24 @@ public final class R {
+     public static final class drawable {
+         public static final int airport=0x7f020000;
+         public static final int arrow=0x7f020001;
+-        public static final int bglayout=0x7f020002;
++        public static final int background=0x7f020002;
+         public static final int cellbottom=0x7f020003;
+         public static final int cellsingle=0x7f020004;
+         public static final int celltop=0x7f020005;
+-        public static final int customshape=0x7f020006;
+-        public static final int ic_action_search=0x7f020007;
+-        public static final int ic_launcher=0x7f020008;
++        public static final int custombitmap=0x7f020006;
++        public static final int customshape=0x7f020007;
++        public static final int ic_action_search=0x7f020008;
++        public static final int ic_launcher=0x7f020009;
+     }
+     public static final class id {
+         public static final int arrow=0x7f090006;
+-        public static final int content=0x7f090001;
++        public static final int category=0x7f090001;
++        public static final int content=0x7f090002;
+         public static final int icon=0x7f090004;
+         public static final int label=0x7f090005;
+         public static final int list_row=0x7f090003;
+         public static final int menu_settings=0x7f090007;
+         public static final int name=0x7f090000;
+-        public static final int nocontent=0x7f090002;
+     }
+     public static final class layout {
+         public static final int activity_content=0x7f030000;
+diff --git a/res/drawable-hdpi/background.png b/res/drawable-hdpi/background.png
+new file mode 100644
+index 0000000..eef41b4
+Binary files /dev/null and b/res/drawable-hdpi/background.png differ
+diff --git a/res/drawable-hdpi/bglayout.9.png b/res/drawable-hdpi/bglayout.9.png
+deleted file mode 100644
+index 424952a..0000000
+Binary files a/res/drawable-hdpi/bglayout.9.png and /dev/null differ
+diff --git a/res/drawable-hdpi/cellsingle.9.png b/res/drawable-hdpi/cellsingle.9.png
+index 4bf8432..3a34882 100644
+Binary files a/res/drawable-hdpi/cellsingle.9.png and b/res/drawable-hdpi/cellsingle.9.png differ
+diff --git a/res/drawable-hdpi/celltop.9.png b/res/drawable-hdpi/celltop.9.png
+index c404e9f..5ad8ba2 100644
+Binary files a/res/drawable-hdpi/celltop.9.png and b/res/drawable-hdpi/celltop.9.png differ
+diff --git a/res/drawable/custombitmap.xml b/res/drawable/custombitmap.xml
+new file mode 100644
+index 0000000..9050356
+--- /dev/null
++++ b/res/drawable/custombitmap.xml
+@@ -0,0 +1,7 @@
++<?xml version="1.0" encoding="utf-8"?>
++<bitmap xmlns:android="http://schemas.android.com/apk/res/android" 
++    android:src="@drawable/background"
++    android:tileMode="repeat"
++	android:dither="true">
++
++</bitmap>
+\ No newline at end of file
+diff --git a/res/drawable/customshape.xml b/res/drawable/customshape.xml
+index ea5608a..8e9a73e 100644
+--- a/res/drawable/customshape.xml
++++ b/res/drawable/customshape.xml
+@@ -1,7 +1,5 @@
+ <?xml version="1.0" encoding="utf-8"?>
+-<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+-    
+-	<corners android:radius="12px"/>
+-	<gradient android:angle="90" android:endColor="#657383" android:startColor="#616D7E" android:type="linear"/>
+-	
++<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle" >
++   <solid android:color="#ffffff" />
++   <stroke android:width="3dip" android:color="#4fa5d5"/>
+ </shape>
+\ No newline at end of file
+diff --git a/res/layout/activity_content.xml b/res/layout/activity_content.xml
+index 1d8ade4..342b8a8 100644
+--- a/res/layout/activity_content.xml
++++ b/res/layout/activity_content.xml
+@@ -4,25 +4,51 @@
+     android:layout_width="fill_parent"
+     android:layout_height="fill_parent" 
+     android:orientation="vertical"
+-    android:background="@color/grey" >
++    android:background="@drawable/custombitmap" >
+     
+     <LinearLayout android:layout_width="fill_parent"
+-        android:layout_height="fill_parent"
++        android:layout_height="wrap_content"
+         android:drawSelectorOnTop="false"
+-        android:background="@color/white"
+-        android:layout_marginLeft="20px"
+-        android:layout_marginTop="20px"
+-        android:layout_marginRight="20px"
+-        android:layout_marginBottom="20px"
+-        android:orientation="vertical">
++        android:layout_marginLeft="7dip"
++		android:layout_marginTop="7dip"
++		android:layout_marginRight="7dip"
++        android:orientation="vertical"
++        android:background="@drawable/cellbottom">
+         
+         <TextView android:id="@+id/name"
+ 	    	android:layout_width="wrap_content"
+-	    	android:layout_height="wrap_content"/>
++	    	android:layout_height="wrap_content"
++	    	android:textColor="#040404"
++			android:typeface="sans"
++        	android:textSize="15dip"
++        	android:textStyle="bold"/>
++        
++        <TextView android:id="@+id/category"
++	        android:layout_width="wrap_content"
++	        android:layout_height="wrap_content"
++	        android:textColor="#343434"
++	        android:textSize="10dip"
++	        android:layout_marginTop="1dip"/>
++        
++    </LinearLayout>
++    
++    <LinearLayout android:layout_width="fill_parent"
++        android:layout_height="fill_parent"
++        android:drawSelectorOnTop="false"
++        android:background="@drawable/cellbottom"
++        android:layout_marginLeft="7dip"
++		android:layout_marginRight="7dip"
++		android:layout_marginBottom="7dip"
++        android:orientation="vertical">
+         
+         <TextView android:id="@+id/content"
+-            android:layout_width="wrap_content"
+-            android:layout_height="wrap_content"/>
++            android:layout_width="fill_parent"
++            android:layout_height="fill_parent"
++            android:gravity="top"
++   			android:padding="5dip"
++   			android:scrollbars="vertical"
++   			android:fadingEdge="vertical"
++   			android:capitalize="sentences"/>
+         
+     </LinearLayout>
+     
+diff --git a/res/layout/activity_main.xml b/res/layout/activity_main.xml
+index 1a4aaae..d67d268 100644
+--- a/res/layout/activity_main.xml
++++ b/res/layout/activity_main.xml
+@@ -1,23 +1,20 @@
++<?xml version="1.0" encoding="utf-8"?>
+ <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:tools="http://schemas.android.com/tools"
+     android:layout_width="fill_parent"
+-    android:layout_height="fill_parent" 
++    android:layout_height="fill_parent"
+     android:orientation="vertical"
+-    android:background="@drawable/bglayout">
+-
+-    <TextView android:id="@+id/nocontent"
+-        android:layout_width="wrap_content"
+-        android:layout_height="wrap_content"/>
++    android:background="@drawable/custombitmap">
+     
+-    <ListView android:id="@android:id/list"
+-		android:layout_width="fill_parent"
+-	    android:layout_height="fill_parent"
+-		android:drawSelectorOnTop="false"
+-		android:background="@color/white"
+-		android:layout_marginLeft="20px"
+-		android:layout_marginTop="20px"
+-		android:layout_marginRight="20px"
+-		android:layout_marginBottom="20px">
++    <ListView
++        android:id="@android:id/list"
++        android:layout_width="wrap_content"
++        android:layout_height="fill_parent"
++        android:drawSelectorOnTop="false" 
++        android:layout_marginLeft="7dip"
++		android:layout_marginTop="7dip"
++		android:layout_marginRight="7dip"
++		android:layout_marginBottom="7dip"
++		android:dividerHeight="-2dip">
+ 	</ListView>
+         
+ </LinearLayout>
+diff --git a/res/layout/row.xml b/res/layout/row.xml
+index e627bc6..b2300a3 100644
+--- a/res/layout/row.xml
++++ b/res/layout/row.xml
+@@ -1,15 +1,15 @@
+ <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+     android:layout_width="fill_parent"
+     android:layout_height="fill_parent"
+-    android:background="@drawable/cellsingle"
++    android:background="@drawable/cellbottom"
+     android:id="@+id/list_row">
+     	
+     	<ImageView android:id="@+id/icon"
+ 	        android:layout_width="wrap_content"
+ 	        android:layout_height="fill_parent"
+-	        android:paddingLeft="2px"
+-	        android:paddingRight="2px"
+-	        android:paddingTop="8px"
++	        android:paddingLeft="2dip"
++	        android:paddingRight="2dip"
++	        android:paddingTop="6dip"
+ 			android:src="@drawable/airport">
+ 		</ImageView>
+ 		
+@@ -17,13 +17,16 @@
+ 		    android:layout_width="wrap_content"
+ 		    android:layout_height="fill_parent"
+ 		    android:layout_toRightOf="@id/icon"
+-			android:textSize="20sp" />
++			android:textColor="#040404"
++			android:typeface="sans"
++        	android:textSize="15dip"
++        	android:textStyle="bold"/>
+ 		    
+ 		<ImageView android:id="@+id/arrow"
+ 		    android:layout_width="wrap_content"
+ 		    android:layout_height="fill_parent"
+-		    android:paddingRight="2px"
+-		    android:paddingTop="10px"
++		    android:paddingRight="2dip"
++		    android:paddingTop="10dip"
+ 			android:src="@drawable/arrow"
+ 			android:layout_alignParentRight="true">
+ 		</ImageView>
+diff --git a/res/values/color.xml b/res/values/color.xml
+index 3bf861c..3211f43 100644
+--- a/res/values/color.xml
++++ b/res/values/color.xml
+@@ -1,5 +1,5 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <resources>
+-    <color name="grey">#808080</color>
++    <color name="grey">#878484</color>
+     <color name="white">#FFFFFF</color>
+ </resources>
+\ No newline at end of file
+diff --git a/res/values/styles.xml b/res/values/styles.xml
+index 4dba0d0..77de658 100644
+--- a/res/values/styles.xml
++++ b/res/values/styles.xml
+@@ -1,5 +1,5 @@
+ <resources>
+ 
+     <style name="AppTheme" parent="android:Theme.Light" />
+-
++    
+ </resources>
+\ No newline at end of file
+diff --git a/src/com/example/bookstoremb/ContentActivity.java b/src/com/example/bookstoremb/ContentActivity.java
+index d42135e..e3f0544 100644
+--- a/src/com/example/bookstoremb/ContentActivity.java
++++ b/src/com/example/bookstoremb/ContentActivity.java
+@@ -6,6 +6,7 @@ package com.example.bookstoremb;
+ import android.app.Activity;
+ import android.content.Intent;
+ import android.os.Bundle;
++import android.text.method.ScrollingMovementMethod;
+ import android.view.Menu;
+ import android.view.MenuItem;
+ import android.widget.TextView;
+@@ -28,6 +29,7 @@ public class ContentActivity extends Activity {
+ 		setContentView(R.layout.activity_content);
+ 		TextView name = (TextView) findViewById(R.id.name);
+ 		TextView content = (TextView) findViewById(R.id.content);
++		TextView category = (TextView) findViewById(R.id.category);
+ 		Bundle extras = getIntent().getExtras();
+ 		book = new Book();
+ 		if (extras != null) {
+@@ -38,6 +40,8 @@ public class ContentActivity extends Activity {
+     }
+ 		name.setText(book.getName());
+ 		content.setText(book.getContent());
++		category.setText(Utils.bookCategoryEnumToString(book.getCategory()));
++		content.setMovementMethod(new ScrollingMovementMethod());
+ 	}
+ 
+ 	/* (non-Javadoc)
+diff --git a/src/com/example/bookstoremb/MainActivity.java b/src/com/example/bookstoremb/MainActivity.java
+index 9ed1807..b9a5a35 100644
+--- a/src/com/example/bookstoremb/MainActivity.java
++++ b/src/com/example/bookstoremb/MainActivity.java
+@@ -41,36 +41,33 @@ public class MainActivity extends ListActivity {
+         BookstoreAdapter adapter;
+         List<String> bookNames = new ArrayList<String>();
+         books = new ArrayList<Book>();
+-        TextView nocontent = (TextView) findViewById(R.id.nocontent);
+-//        try {
+-//          RestClient rest = new RestClient(SEARCH_ALL_BOOK_URL);
+-//          rest.execute(RestClient.RequestMethod.GET);
+-//          if (rest.getResponseCode() == 200) {
+-//            JSONArray jsons = (JSONArray) new JSONArray(rest.getResponseStr());
+-//            for (int i = 0; i < jsons.length(); i++) {
+-//              JSONObject json = jsons.getJSONObject(i);
+-//              Book book = Utils.createBookFromJSON(json);
+-//              books.add(book);
+-//            }
+-//            for (Book b : books) {
+-//              bookNames.add(b.getName());
+-//            }
+-//            adapter = new BookstoreAdapter(this, bookNames);
+-//            this.setListAdapter(adapter);
++//        TextView nocontent = (TextView) findViewById(R.id.nocontent);
++        try {
++          RestClient rest = new RestClient(SEARCH_ALL_BOOK_URL);
++          rest.execute(RestClient.RequestMethod.GET);
++          if (rest.getResponseCode() == 200) {
++            JSONArray jsons = (JSONArray) new JSONArray(rest.getResponseStr());
++            for (int i = 0; i < jsons.length(); i++) {
++              JSONObject json = jsons.getJSONObject(i);
++              Book book = Utils.createBookFromJSON(json);
++              books.add(book);
++            }
++            for (Book b : books) {
++              bookNames.add(b.getName());
++            }
++            adapter = new BookstoreAdapter(this, bookNames);
++            this.setListAdapter(adapter);
+ //            nocontent.setText("");
+-//          } else {
+-//            adapter = new BookstoreAdapter(this, bookNames);
+-//            this.setListAdapter(adapter);
++          } else {
++            adapter = new BookstoreAdapter(this, bookNames);
++            this.setListAdapter(adapter);
+ //            nocontent.setText(R.string.nocontent);
+-//          }
+-//        } catch (JSONException jse) {
+-//          jse.printStackTrace();
+-//        } catch (UnsupportedEncodingException ue) {
+-//          ue.printStackTrace();
+-//        }
+-        bookNames.add("ABC");
+-        adapter = new BookstoreAdapter(this, bookNames);
+-        this.setListAdapter(adapter);
++          }
++        } catch (JSONException jse) {
++          jse.printStackTrace();
++        } catch (UnsupportedEncodingException ue) {
++          ue.printStackTrace();
++        }
+     }
+ 
+     /* (non-Javadoc)
+@@ -86,7 +83,7 @@ public class MainActivity extends ListActivity {
+       intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+       intent.putExtra(Constants.BOOK_ID, book.getBookId());
+       intent.putExtra(Constants.BOOK_NAME, book.getName());
+-      intent.putExtra(Constants.BOOK_CATEGORY, book.getCategory());
++      intent.putExtra(Constants.BOOK_CATEGORY, Utils.bookCategoryEnumToString(book.getCategory()));
+       intent.putExtra(Constants.BOOK_CONTENT, book.getContent());
+       startActivity(intent);
+     }
+diff --git a/src/com/example/bookstoremb/adapter/BookstoreAdapter.java b/src/com/example/bookstoremb/adapter/BookstoreAdapter.java
+index 180ea66..8b487ce 100644
+--- a/src/com/example/bookstoremb/adapter/BookstoreAdapter.java
++++ b/src/com/example/bookstoremb/adapter/BookstoreAdapter.java
+@@ -92,11 +92,11 @@ public class BookstoreAdapter extends BaseAdapter {
+     holder.textView.setText(arr.get(position));
+     RelativeLayout listRow = (RelativeLayout) convertView.findViewById(R.id.list_row); 
+     if (position == 0) {
+-      listRow.setBackgroundResource(R.drawable.celltop);
++//      listRow.setBackgroundResource(R.drawable.celltop);
+ //      listRow.setBackgroundColor(Color.RED);
+     }
+     if (position == (arr.size() - 1)) {
+-      listRow.setBackgroundResource(R.drawable.cellbottom);
++//      listRow.setBackgroundResource(R.drawable.cellbottom);
+ //      listRow.setBackgroundColor(Color.GREEN);
+     }
+     return convertView;
+diff --git a/src/com/example/bookstoremb/view/LineTextView.java b/src/com/example/bookstoremb/view/LineTextView.java
+new file mode 100644
+index 0000000..fb8c826
+--- /dev/null
++++ b/src/com/example/bookstoremb/view/LineTextView.java
+@@ -0,0 +1,87 @@
++package com.example.bookstoremb.view;
++import android.content.Context;
++import android.graphics.Canvas;
++import android.graphics.Paint;
++import android.graphics.Rect;
++import android.util.AttributeSet;
++import android.widget.TextView;
++
++/*
++ * Copyright (C) 2003-2012 eXo Platform SAS.
++ *
++ * This program is free software: you can redistribute it and/or modify
++ * it under the terms of the GNU Affero General Public License as published by
++ * the Free Software Foundation, either version 3 of the License, or
++ * (at your option) any later version.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ * GNU Affero General Public License for more details.
++ *
++ * You should have received a copy of the GNU Affero General Public License
++ * along with this program. If not, see <http://www.gnu.org/licenses/>.
++ */
++
++/**
++ * Created by The eXo Platform SAS
++ * Author : BinhNV
++ *          binhnv@exoplatform.com
++ * Jul 31, 2012  
++ */
++public class LineTextView extends TextView {
++
++  private Rect rect;
++  private Paint paint;
++  
++  /**
++   * @param context
++   */
++  public LineTextView(Context context) {
++    super(context);
++  }
++
++  /**
++   * @param context
++   * @param attrs
++   */
++  public LineTextView(Context context, AttributeSet attrs) {
++    super(context, attrs);
++    rect = new Rect();
++    paint = new Paint();
++    paint.setStyle(Paint.Style.STROKE);
++    paint.setColor(0x800000FF);
++  }
++
++  /**
++   * @param context
++   * @param attrs
++   * @param defStyle
++   */
++  public LineTextView(Context context, AttributeSet attrs, int defStyle) {
++    super(context, attrs, defStyle);
++  }
++
++  /* (non-Javadoc)
++   * @see android.widget.TextView#onDraw(android.graphics.Canvas)
++   */
++  @Override
++  protected void onDraw(Canvas canvas) {
++    super.onDraw(canvas);
++    
++    int height = getHeight();
++    int lineheight = getLineHeight();
++    int count = height / lineheight;
++    if (getLineCount() > count) {
++      count = getLineCount();
++    }
++    Rect r = rect;
++    Paint p = paint;
++    int baseline = getLineBounds(0, r);
++    for (int i = 0; i < count; i++) {
++      canvas.drawLine(r.left, baseline + 1, r.right, baseline + 1, p);
++      baseline+=getLineHeight();
++    }
++  }
++
++}

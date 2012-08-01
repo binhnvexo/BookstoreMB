@@ -1,0 +1,449 @@
+commit f6b6c78224d8ba191c7230a2e2c1eafeb24a564b
+Author: BinhNV <binhnv@exoplatform.com>
+Date:   Mon Jul 30 10:48:57 2012 +0700
+
+    add code with expose data from rest
+
+diff --git a/bin/BookstoreMB.apk b/bin/BookstoreMB.apk
+index 797675a..5a61a0c 100644
+Binary files a/bin/BookstoreMB.apk and b/bin/BookstoreMB.apk differ
+diff --git a/bin/classes.dex b/bin/classes.dex
+index ad45e8c..88d138f 100644
+Binary files a/bin/classes.dex and b/bin/classes.dex differ
+diff --git a/bin/classes/com/example/bookstoremb/ContentActivity.class b/bin/classes/com/example/bookstoremb/ContentActivity.class
+index 7663822..9bcacf8 100644
+Binary files a/bin/classes/com/example/bookstoremb/ContentActivity.class and b/bin/classes/com/example/bookstoremb/ContentActivity.class differ
+diff --git a/bin/classes/com/example/bookstoremb/MainActivity.class b/bin/classes/com/example/bookstoremb/MainActivity.class
+index 90614f5..0a5e938 100644
+Binary files a/bin/classes/com/example/bookstoremb/MainActivity.class and b/bin/classes/com/example/bookstoremb/MainActivity.class differ
+diff --git a/bin/classes/com/example/bookstoremb/R$string.class b/bin/classes/com/example/bookstoremb/R$string.class
+index fae81ac..7445369 100644
+Binary files a/bin/classes/com/example/bookstoremb/R$string.class and b/bin/classes/com/example/bookstoremb/R$string.class differ
+diff --git a/bin/classes/com/example/bookstoremb/R$style.class b/bin/classes/com/example/bookstoremb/R$style.class
+index 88fff7c..d968026 100644
+Binary files a/bin/classes/com/example/bookstoremb/R$style.class and b/bin/classes/com/example/bookstoremb/R$style.class differ
+diff --git a/bin/classes/com/example/bookstoremb/utils/Constants.class b/bin/classes/com/example/bookstoremb/utils/Constants.class
+index a610a33..64a4d24 100644
+Binary files a/bin/classes/com/example/bookstoremb/utils/Constants.class and b/bin/classes/com/example/bookstoremb/utils/Constants.class differ
+diff --git a/bin/classes/com/example/bookstoremb/utils/RestClient$RequestMethod.class b/bin/classes/com/example/bookstoremb/utils/RestClient$RequestMethod.class
+index 8941c63..041691f 100644
+Binary files a/bin/classes/com/example/bookstoremb/utils/RestClient$RequestMethod.class and b/bin/classes/com/example/bookstoremb/utils/RestClient$RequestMethod.class differ
+diff --git a/bin/classes/com/example/bookstoremb/utils/RestClient.class b/bin/classes/com/example/bookstoremb/utils/RestClient.class
+index ebb58d2..081ee42 100644
+Binary files a/bin/classes/com/example/bookstoremb/utils/RestClient.class and b/bin/classes/com/example/bookstoremb/utils/RestClient.class differ
+diff --git a/bin/classes/com/example/bookstoremb/utils/Utils.class b/bin/classes/com/example/bookstoremb/utils/Utils.class
+new file mode 100644
+index 0000000..51ceb3f
+Binary files /dev/null and b/bin/classes/com/example/bookstoremb/utils/Utils.class differ
+diff --git a/bin/jarlist.cache b/bin/jarlist.cache
+deleted file mode 100644
+index 1b5ec3f..0000000
+--- a/bin/jarlist.cache
++++ /dev/null
+@@ -1,3 +0,0 @@
+-# cache for current jar dependecy. DO NOT EDIT.
+-# format is <lastModified> <length> <SHA-1> <path>
+-# Encoding is UTF-8
+diff --git a/bin/resources.ap_ b/bin/resources.ap_
+index ce5e828..edb7b9a 100644
+Binary files a/bin/resources.ap_ and b/bin/resources.ap_ differ
+diff --git a/gen/com/example/bookstoremb/R.java b/gen/com/example/bookstoremb/R.java
+index 0561043..c56cc01 100644
+--- a/gen/com/example/bookstoremb/R.java
++++ b/gen/com/example/bookstoremb/R.java
+@@ -43,6 +43,8 @@ public final class R {
+     public static final class string {
+         public static final int app_name=0x7f060000;
+         public static final int hello_world=0x7f060001;
++        public static final int menu_back=0x7f060005;
++        public static final int menu_close=0x7f060004;
+         public static final int menu_settings=0x7f060002;
+         public static final int title_activity_main=0x7f060003;
+     }
+diff --git a/res/values/strings.xml b/res/values/strings.xml
+index 8ecd079..8c513fe 100644
+--- a/res/values/strings.xml
++++ b/res/values/strings.xml
+@@ -4,5 +4,7 @@
+     <string name="hello_world">Hello world!</string>
+     <string name="menu_settings">Settings</string>
+     <string name="title_activity_main">Book Store</string>
++    <string name="menu_close">CLOSE</string>
++    <string name="menu_back">BACK</string>
+ 
+ </resources>
+\ No newline at end of file
+diff --git a/src/com/example/bookstoremb/ContentActivity.java b/src/com/example/bookstoremb/ContentActivity.java
+index 96f13c6..e04970f 100644
+--- a/src/com/example/bookstoremb/ContentActivity.java
++++ b/src/com/example/bookstoremb/ContentActivity.java
+@@ -3,8 +3,16 @@
+  */
+ package com.example.bookstoremb;
+ 
++import com.example.bookstoremb.utils.Constants;
++
+ import android.app.Activity;
++import android.content.Intent;
+ import android.os.Bundle;
++import android.view.ContextMenu;
++import android.view.ContextMenu.ContextMenuInfo;
++import android.view.Menu;
++import android.view.MenuItem;
++import android.view.View;
+ import android.widget.TextView;
+ 
+ /**
+@@ -21,4 +29,23 @@ public class ContentActivity extends Activity {
+ 		str.setText("Hello world");
+ 	}
+ 
++	/* (non-Javadoc)
++   * @see android.app.Activity#onCreateOptionsMenu(android.view.Menu)
++   */
++  @Override
++  public boolean onCreateOptionsMenu(Menu menu) {
++    menu.add(menu.NONE, Constants.MENU_BACK, menu.NONE, R.string.menu_back);
++    return super.onCreateOptionsMenu(menu);
++  }
++
++  /* (non-Javadoc)
++   * @see android.app.Activity#onMenuItemSelected(int, android.view.MenuItem)
++   */
++  @Override
++  public boolean onMenuItemSelected(int featureId, MenuItem item) {
++    Intent intent = new Intent(this, MainActivity.class);
++    startActivity(intent);
++    return super.onMenuItemSelected(featureId, item);
++  }
++
+ }
+diff --git a/src/com/example/bookstoremb/MainActivity.java b/src/com/example/bookstoremb/MainActivity.java
+index d8fd426..5974b30 100644
+--- a/src/com/example/bookstoremb/MainActivity.java
++++ b/src/com/example/bookstoremb/MainActivity.java
+@@ -1,34 +1,33 @@
+ package com.example.bookstoremb;
+ 
+-import java.io.BufferedReader;
+-import java.io.IOException;
+-import java.io.InputStream;
+-import java.io.InputStreamReader;
++import java.io.UnsupportedEncodingException;
++import java.util.ArrayList;
++import java.util.List;
+ 
+-import org.apache.http.HttpEntity;
+-import org.apache.http.HttpResponse;
+-import org.apache.http.client.ClientProtocolException;
+-import org.apache.http.client.HttpClient;
+-import org.apache.http.client.ResponseHandler;
+-import org.apache.http.client.methods.HttpGet;
+-import org.apache.http.impl.client.BasicResponseHandler;
+-import org.apache.http.impl.client.DefaultHttpClient;
++import org.json.JSONArray;
++import org.json.JSONException;
++import org.json.JSONObject;
+ 
+ import android.app.ListActivity;
+ import android.content.Intent;
+ import android.os.Bundle;
+-import android.util.Base64;
+ import android.view.Menu;
++import android.view.MenuItem;
+ import android.view.View;
+ import android.widget.ArrayAdapter;
+ import android.widget.ListView;
+ import android.widget.TextView;
+ 
++import com.example.bookstoremb.models.Book;
++import com.example.bookstoremb.utils.Constants;
++import com.example.bookstoremb.utils.RestClient;
++import com.example.bookstoremb.utils.Utils;
++
+ public class MainActivity extends ListActivity {
+ 
+     TextView selection;
+-    String[] items = {"Alice in wonderland", "Jouney to the West", "Shelock Holme", "The Mask"};
+-    String URL = "http://192.168.1.130:8080/rest/private/bookstore/searchAllBook";
++    String[] items = {};
++    String SEARCH_ALL_BOOK_URL = "http://192.168.1.130:8080/rest/private/bookstore/searchAllBook";
+     String result;
+     String username = "root";
+     String password = "gtn";
+@@ -37,35 +36,31 @@ public class MainActivity extends ListActivity {
+     public void onCreate(Bundle savedInstanceState) {
+         super.onCreate(savedInstanceState);
+         setContentView(R.layout.activity_main);
+-//        HttpClient client = new DefaultHttpClient();
+-//        HttpGet request = new HttpGet(URL);
+-//        request.setHeader("Authorization",
+-//                      "Basic "
+-//                          + Base64.encodeToString((username + ":" + password).getBytes(),
+-//                                                  Base64.NO_WRAP));
+-//        ResponseHandler<String> handler = new BasicResponseHandler();
+-//        try {
+-//          HttpResponse response = client.execute(request);
+-//          HttpEntity entity = response.getEntity();
+-//          if (entity != null) {
+-//            InputStream is = entity.getContent();
+-//            String responseStr = convertStreamToString(is);
+-//          }
+-//        } catch (ClientProtocolException cpe) {
+-//          cpe.printStackTrace();
+-//        } catch (IOException e) {
+-//          e.printStackTrace();
+-//        }
+-//        client.getConnectionManager().shutdown();
++        List<Book> books = new ArrayList<Book>();
++        try {
++          RestClient rest = new RestClient(SEARCH_ALL_BOOK_URL);
++          rest.execute(RestClient.RequestMethod.GET);
++          if (rest.getResponseCode() == 200) {
++            JSONArray jsons = (JSONArray) new JSONArray(rest.getResponseStr());
++            for (int i = 0; i < jsons.length(); i++) {
++              JSONObject json = jsons.getJSONObject(i);
++              Book book = Utils.createBookFromJSON(json);
++              books.add(book);
++            }
++          }
++        } catch (JSONException jse) {
++          jse.printStackTrace();
++        } catch (UnsupportedEncodingException ue) {
++          ue.printStackTrace();
++        }
++        List<String> bookNames = new ArrayList<String>();
++        for (Book b : books) {
++          bookNames.add(b.getName());
++        }
++        items = bookNames.toArray(new String[bookNames.size()]);
+         setListAdapter(new ArrayAdapter<String>(this, R.layout.row, R.id.label, items));
+     }
+ 
+-    @Override
+-    public boolean onCreateOptionsMenu(Menu menu) {
+-        getMenuInflater().inflate(R.menu.activity_main, menu);
+-        return true;
+-    }
+-
+     /* (non-Javadoc)
+      * @see android.app.ListActivity#onListItemClick(android.widget.ListView, android.view.View, int, long)
+      */
+@@ -76,26 +71,24 @@ public class MainActivity extends ListActivity {
+       startActivity(intent);
+     }
+     
+-    private String convertStreamToString(InputStream is) {
+-
+-      BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+-      StringBuilder sb = new StringBuilder();
++    /* (non-Javadoc)
++     * @see android.app.Activity#onCreateOptionsMenu(android.view.Menu)
++     */
++    @Override
++    public boolean onCreateOptionsMenu(Menu menu) {
++      menu.add(menu.NONE, Constants.MENU_CLOSE, menu.NONE, R.string.menu_close);
++      return super.onCreateOptionsMenu(menu);
++    }
+ 
+-      String line = null;
+-      try {
+-          while ((line = reader.readLine()) != null) {
+-              sb.append(line + "\n");
+-          }
+-      } catch (IOException e) {
+-          e.printStackTrace();
+-      } finally {
+-          try {
+-              is.close();
+-          } catch (IOException e) {
+-              e.printStackTrace();
+-          }
++    /* (non-Javadoc)
++     * @see android.app.Activity#onMenuItemSelected(int, android.view.MenuItem)
++     */
++    @Override
++    public boolean onMenuItemSelected(int featureId, MenuItem item) {
++      if (Constants.MENU_CLOSE == item.getItemId()) {
++        finish();
+       }
+-      return sb.toString();
+-  }
+-    
++      return super.onMenuItemSelected(featureId, item);
++    }
++
+ }
+diff --git a/src/com/example/bookstoremb/utils/Constants.java b/src/com/example/bookstoremb/utils/Constants.java
+index ec90a0a..bffa3b1 100644
+--- a/src/com/example/bookstoremb/utils/Constants.java
++++ b/src/com/example/bookstoremb/utils/Constants.java
+@@ -16,6 +16,8 @@
+  */
+ package com.example.bookstoremb.utils;
+ 
++import android.view.Menu;
++
+ /**
+  * Created by The eXo Platform SAS
+  * Author : BinhNV
+@@ -24,4 +26,8 @@ package com.example.bookstoremb.utils;
+  */
+ public class Constants {
+   
++  public static final int MENU_EDIT = Menu.FIRST + 1;
++  public static final int MENU_BACK = Menu.FIRST + 2;
++  public static final int MENU_CLOSE = Menu.FIRST + 3;
++  
+ }
+diff --git a/src/com/example/bookstoremb/utils/RestClient.java b/src/com/example/bookstoremb/utils/RestClient.java
+index bddc21f..229a795 100644
+--- a/src/com/example/bookstoremb/utils/RestClient.java
++++ b/src/com/example/bookstoremb/utils/RestClient.java
+@@ -20,6 +20,7 @@ import java.io.BufferedReader;
+ import java.io.IOException;
+ import java.io.InputStream;
+ import java.io.InputStreamReader;
++import java.io.UnsupportedEncodingException;
+ import java.net.URLEncoder;
+ import java.util.ArrayList;
+ import java.util.List;
+@@ -37,6 +38,8 @@ import org.apache.http.impl.client.DefaultHttpClient;
+ import org.apache.http.message.BasicNameValuePair;
+ import org.apache.http.protocol.HTTP;
+ 
++import android.util.Base64;
++
+ /**
+  * Created by The eXo Platform SAS
+  * Author : BinhNV
+@@ -55,6 +58,9 @@ public class RestClient {
+   private int responseCode;
+   private String errorMessage;
+   private String responseStr;
++  private HttpResponse respone;
++  String username = "root";
++  String password = "gtn";
+   
+   /**
+    * 
+@@ -65,7 +71,7 @@ public class RestClient {
+     headers = new ArrayList<NameValuePair>();
+   }
+ 
+-  public void execute(RequestMethod method) throws Exception {
++  public void execute(RequestMethod method) throws UnsupportedEncodingException {
+     switch (method) {
+       case GET:
+         {
+@@ -82,6 +88,7 @@ public class RestClient {
+             }
+           }
+           HttpGet request = new HttpGet(url + combinedParams);
++          request.setHeader("Authorization", getAuthorization());
+           for (NameValuePair h : headers) {
+             request.addHeader(h.getName(), h.getValue());
+           }
+@@ -93,6 +100,7 @@ public class RestClient {
+           HttpPost request = new HttpPost(url);
+           for (NameValuePair h : headers) {
+             request.addHeader(h.getName(), h.getValue());
++            request.setHeader("Authorization", getAuthorization());
+           }
+           if (!params.isEmpty()) {
+             request.setEntity(new UrlEncodedFormEntity(params, HTTP.UTF_8));
+@@ -132,6 +140,13 @@ public class RestClient {
+     return responseStr;
+   }
+   
++  /**
++   * @return the respone
++   */
++  public HttpResponse getRespone() {
++    return respone;
++  }
++  
+   private void executeRequest(HttpUriRequest request, String url) {
+     HttpClient client = new DefaultHttpClient();
+     HttpResponse respone;
+@@ -173,5 +188,9 @@ public class RestClient {
+     }
+     return sb.toString();
+   }
++  
++  private String getAuthorization() {
++    return "Basic " + Base64.encodeToString((username + ":" + password).getBytes(), Base64.NO_WRAP);
++  }
+ 
+ }
+diff --git a/src/com/example/bookstoremb/utils/Utils.java b/src/com/example/bookstoremb/utils/Utils.java
+new file mode 100644
+index 0000000..1115573
+--- /dev/null
++++ b/src/com/example/bookstoremb/utils/Utils.java
+@@ -0,0 +1,64 @@
++/*
++ * Copyright (C) 2003-2012 eXo Platform SAS.
++ *
++ * This program is free software: you can redistribute it and/or modify
++ * it under the terms of the GNU Affero General Public License as published by
++ * the Free Software Foundation, either version 3 of the License, or
++ * (at your option) any later version.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ * GNU Affero General Public License for more details.
++ *
++ * You should have received a copy of the GNU Affero General Public License
++ * along with this program. If not, see <http://www.gnu.org/licenses/>.
++ */
++package com.example.bookstoremb.utils;
++
++import org.json.JSONException;
++import org.json.JSONObject;
++
++import com.example.bookstoremb.models.Book;
++
++/**
++ * Created by The eXo Platform SAS
++ * Author : BinhNV
++ *          binhnv@exoplatform.com
++ * Jul 5, 2012  
++ */
++public class Utils {
++
++  /**
++   * Convert enum value to String value 
++   * 
++   * @param category Enum value of category
++   * @return String value of category
++   */
++  public static String bookCategoryEnumToString(Book.CATEGORY category) {
++    if (category != null) {
++      return category.toString();
++    }
++    return null;
++  }
++  
++  /**
++   * Convert String value to enum value
++   * 
++   * @param category String value of category
++   * @return Book.CATEGORY of category
++   */
++  public static Book.CATEGORY bookCategoryStringToEnum(String category) {
++    return category != null ? Book.CATEGORY.valueOf(category) : null;
++  }
++  
++  public static Book createBookFromJSON(JSONObject json) throws JSONException {
++    Book book = new Book();
++    book.setBookId(json.getString("bookId"));
++    book.setName(json.getString("name"));
++    book.setCategory(Utils.bookCategoryStringToEnum(json.getString("category")));
++    book.setContent(json.getString("content"));
++    return book;
++  }
++  
++}
+\ No newline at end of file
