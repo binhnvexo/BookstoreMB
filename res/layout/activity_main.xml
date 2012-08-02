@@ -6,11 +6,6 @@
     android:background="@drawable/custombitmap"
     android:id="@+id/main">
 
-    <Button android:id="@+id/btnReturn"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/btncancel"/>
-    
     <ListView
         android:id="@android:id/list"
         android:layout_width="wrap_content"
@@ -22,5 +17,11 @@
 		android:layout_marginBottom="24px"
 		android:dividerHeight="-2dip">
 	</ListView>
+	
+    <Button android:id="@+id/btnReturn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/btncancel"
+        android:layout_gravity="center_horizontal"/>
 	
 </LinearLayout>

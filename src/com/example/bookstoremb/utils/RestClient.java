@@ -74,7 +74,7 @@ public class RestClient {
     headers = new ArrayList<NameValuePair>();
   }
 
-  public void execute(RequestMethod method) throws UnsupportedEncodingException {
+  public void execute(RequestMethod method) throws UnsupportedEncodingException, ClientProtocolException, IOException {
     switch (method) {
       case GET:
         {
@@ -170,25 +170,17 @@ public class RestClient {
     return respone;
   }
   
-  private void executeRequest(HttpUriRequest request, String url) {
-    HttpClient client = new DefaultHttpClient();
+  private void executeRequest(HttpUriRequest request, String url) throws ClientProtocolException, IOException {
+    DefaultHttpClient client = new DefaultHttpClient();
     HttpResponse respone;
-    try {
-      respone = client.execute(request);
-      responseCode = respone.getStatusLine().getStatusCode();
-      errorMessage = respone.getStatusLine().getReasonPhrase();
-      HttpEntity entity = respone.getEntity();
-      if (entity != null) {
-        InputStream is = entity.getContent();
-        responseStr = convertStreamToString(is);
-        is.close();
-      }
-    } catch (ClientProtocolException cpe) {
-      client.getConnectionManager().shutdown();
-      cpe.printStackTrace();
-    } catch (IOException ioe) {
-      client.getConnectionManager().shutdown();
-      ioe.printStackTrace();
+    respone = client.execute(request);
+    responseCode = respone.getStatusLine().getStatusCode();
+    errorMessage = respone.getStatusLine().getReasonPhrase();
+    HttpEntity entity = respone.getEntity();
+    if (entity != null) {
+      InputStream is = entity.getContent();
+      responseStr = convertStreamToString(is);
+      is.close();
     }
   }
   

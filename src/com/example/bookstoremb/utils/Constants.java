@@ -35,5 +35,6 @@ public class Constants {
   public static final String BOOK_NAME = "name";
   public static final String BOOK_CATEGORY = "category";
   public static final String BOOK_CONTENT = "content";
+  public static final String SEARCH_CONDITION = "search_condition";
   
 }

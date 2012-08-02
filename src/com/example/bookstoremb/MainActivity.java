@@ -1,24 +1,29 @@
 package com.example.bookstoremb;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.http.client.ClientProtocolException;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -32,69 +37,99 @@ import com.example.bookstoremb.utils.RestClient;
 import com.example.bookstoremb.utils.Utils;
 import com.example.bookstoremb.wrapper.SearchWrapper;
 
+@SuppressLint("NewApi")
 public class MainActivity extends ListActivity {
 
-    TextView selection;
-    String[] items = {};
-    String SEARCH_ALL_BOOK_URL = "http://192.168.1.130:8080/rest/private/bookstore/searchAllBook";
-    String SEARCH_BOOK_BY_NAME = "http://192.168.1.130:8080/rest/private/bookstore/searchBookByName/";
-    String result;
-    List<Book> books;
-    Button btnReturn;
+    private static final String SEARCH_ALL_BOOK_URL = "http://192.168.1.130:8080/rest/private/bookstore/searchAllBook";
+    private static final String SEARCH_BOOK_BY_NAME = "http://192.168.1.130:8080/rest/private/bookstore/searchBookByName/";
+    private List<Book> books;
+    private Button btnReturn;
+    private TextView nocontent;
+    private LinearLayout main;
+    private String searchCondition;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        LinearLayout main = (LinearLayout) findViewById(R.id.main);
-        btnReturn = (Button) findViewById(R.id.btnReturn);
-        books = new ArrayList<Book>();
-        Bundle extras = getIntent().getExtras();
-        try {
-          if (extras == null) {
-            main.removeView(btnReturn);
-            renderList(SEARCH_ALL_BOOK_URL);
-          } else {
-            String bookName = extras.getString(Constants.BOOK_NAME);
-            if (bookName == null || "".equals(bookName)) {
-              main.removeView(btnReturn);
-              renderList(SEARCH_ALL_BOOK_URL);
-            } else {
-              renderList(SEARCH_BOOK_BY_NAME + bookName.replaceAll(" ", ""));
-            }
-          }
-        } catch (UnsupportedEncodingException e) {
-          e.printStackTrace();
-        } catch (JSONException e) {
-          e.printStackTrace();
+        if (Build.VERSION.SDK_INT > 9) {
+          StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+          StrictMode.setThreadPolicy(policy);
         }
-        
+        initView();
+        Bundle extras = getIntent().getExtras();
+        if (extras == null) {
+          main.removeView(btnReturn);
+          searchCondition = SEARCH_ALL_BOOK_URL;
+          renderList(SEARCH_ALL_BOOK_URL);
+        } else {
+          String bookName = extras.getString(Constants.BOOK_NAME);
+          searchCondition = extras.getString(Constants.SEARCH_CONDITION);
+          if (bookName == null || "".equals(bookName)) {
+            renderList(searchCondition);
+          } else {
+            searchCondition = SEARCH_BOOK_BY_NAME + bookName.replaceAll(" ", "");
+            renderList(SEARCH_BOOK_BY_NAME + bookName.replaceAll(" ", ""));
+          }
+        }
     }
 
-    private void renderList(String url) throws JSONException, UnsupportedEncodingException {
-      BookstoreAdapter adapter;
-      RestClient rest = new RestClient(url);
-      rest.execute(RestClient.RequestMethod.GET);
-      if (rest.getResponseCode() == 200) {
-        JSONArray jsons = (JSONArray) new JSONArray(rest.getResponseStr());
-        for (int i = 0; i < jsons.length(); i++) {
-          JSONObject json = jsons.getJSONObject(i);
-          Book book = Utils.createBookFromJSON(json);
-          books.add(book);
+    private void initView() {
+      main = (LinearLayout) findViewById(R.id.main);
+      nocontent = new TextView(this);
+      nocontent.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+      nocontent.setText(R.string.nocontent);
+      books = new ArrayList<Book>();
+      btnReturn = (Button) findViewById(R.id.btnReturn);
+      btnReturn.setOnClickListener(new OnClickListener() {
+        
+        @Override
+        public void onClick(View v) {
+          main.removeView(btnReturn);
+          main.removeView(nocontent);
+          renderList(SEARCH_ALL_BOOK_URL);
         }
-        adapter = new BookstoreAdapter(this, books);
-        this.setListAdapter(adapter);
-      } else {
-        adapter = new BookstoreAdapter(this, books);
-        this.setListAdapter(adapter);
-        LinearLayout main = (LinearLayout) findViewById(R.id.main);
-        TextView nocontent = new TextView(this);
-        nocontent.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-        nocontent.setText(R.string.nocontent);
-        main.removeAllViews();
-        main.addView(btnReturn);
-        main.addView(nocontent);
+        
+      });
+    }
+    
+    private void renderList(String url) {
+      try {
+        BookstoreAdapter adapter;
+        RestClient rest = new RestClient(url);
+        rest.execute(RestClient.RequestMethod.GET);
+        books = new ArrayList<Book>();
+        if (rest.getResponseCode() == 200) {
+          JSONArray jsons = (JSONArray) new JSONArray(rest.getResponseStr());
+          for (int i = 0; i < jsons.length(); i++) {
+            JSONObject json = jsons.getJSONObject(i);
+            Book book = Utils.createBookFromJSON(json);
+            books.add(book);
+          }
+          adapter = new BookstoreAdapter(this, books);
+          this.setListAdapter(adapter);
+        } else {
+          adapter = new BookstoreAdapter(this, books);
+          this.setListAdapter(adapter);
+          prepareViewResponseError();
+          main.addView(btnReturn, 1);
+        }
+      } catch (JSONException e) {
+        e.printStackTrace();
+        prepareViewResponseError();
+      } catch (ClientProtocolException e) {
+        e.printStackTrace();
+        prepareViewResponseError();
+      } catch (IOException e) {
+        e.printStackTrace();
+        prepareViewResponseError();
       }
+    }
+    
+    private void prepareViewResponseError() {
+      main.removeView(btnReturn);
+      main.removeView(nocontent);
+      main.addView(nocontent, 0);
     }
     
     /* (non-Javadoc)
@@ -105,13 +140,13 @@ public class MainActivity extends ListActivity {
       super.onListItemClick(l, v, position, id);
       Book book = new Book();
       book = books.get(position);
-      
       Intent intent = new Intent(this, ContentActivity.class);
       intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
       intent.putExtra(Constants.BOOK_ID, book.getBookId());
       intent.putExtra(Constants.BOOK_NAME, book.getName());
       intent.putExtra(Constants.BOOK_CATEGORY, Utils.bookCategoryEnumToString(book.getCategory()));
       intent.putExtra(Constants.BOOK_CONTENT, book.getContent());
+      intent.putExtra(Constants.SEARCH_CONDITION, searchCondition);
       startActivity(intent);
     }
     
@@ -133,6 +168,7 @@ public class MainActivity extends ListActivity {
       switch (item.getItemId()) {
       case Constants.MENU_CLOSE:
         finish();
+        System.exit(0);
         break;
       case Constants.MENU_SEARCH:
         LayoutInflater inflater = LayoutInflater.from(this);
@@ -141,7 +177,7 @@ public class MainActivity extends ListActivity {
         final Context nestContext = this;
         new AlertDialog.Builder(this).setTitle(R.string.tltsearch)
                                    .setView(searchView)
-                                   .setPositiveButton(R.string.btnsearch, new OnClickListener() {
+                                   .setPositiveButton(R.string.btnsearch, new DialogInterface.OnClickListener() {
 
                                      @Override
                                      public void onClick(DialogInterface dialog, int which) {
@@ -152,11 +188,11 @@ public class MainActivity extends ListActivity {
                                        startActivity(intent);
                                      }
                                    })
-                                   .setNegativeButton(R.string.btncancel, new OnClickListener() {
+                                   .setNegativeButton(R.string.btncancel, new DialogInterface.OnClickListener() {
 
                                      @Override
                                      public void onClick(DialogInterface dialog, int which) {
-
+                                       
                                      }
                                    })
                                    .show();

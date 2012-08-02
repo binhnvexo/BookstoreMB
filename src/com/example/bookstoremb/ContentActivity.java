@@ -3,8 +3,10 @@
  */
 package com.example.bookstoremb;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
+import org.apache.http.client.ClientProtocolException;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -32,6 +34,7 @@ public class ContentActivity extends Activity {
 
   private Book book;
   private String SEARCH_AUTHOR = "http://192.168.1.130:8080/rest/private/bookstore/searchAuthorByBookId/";
+  private String searchCondition;
   
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +51,7 @@ public class ContentActivity extends Activity {
 		  book.setName(extras.getString(Constants.BOOK_NAME));
 		  book.setCategory(Utils.bookCategoryStringToEnum(extras.getString(Constants.BOOK_CATEGORY)));
 		  book.setContent(extras.getString(Constants.BOOK_CONTENT));
+		  searchCondition = extras.getString(Constants.SEARCH_CONDITION);
     }
 		name.setText(book.getName());
 		content.setText(book.getContent());
@@ -64,6 +68,10 @@ public class ContentActivity extends Activity {
     } catch (UnsupportedEncodingException e) {
       e.printStackTrace();
     } catch (JSONException e) {
+      e.printStackTrace();
+    } catch (ClientProtocolException e) {
+      e.printStackTrace();
+    } catch (IOException e) {
       e.printStackTrace();
     }
 		author.setText(au.getName());
@@ -84,7 +92,12 @@ public class ContentActivity extends Activity {
   @Override
   public boolean onMenuItemSelected(int featureId, MenuItem item) {
     Intent intent = new Intent(this, MainActivity.class);
+    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+    if (searchCondition != null || "".equals(searchCondition)) {
+      intent.putExtra(Constants.SEARCH_CONDITION, searchCondition);
+    }
     startActivity(intent);
+    finish();
     return super.onMenuItemSelected(featureId, item);
   }
 
