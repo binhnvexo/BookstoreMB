@@ -29,7 +29,6 @@ import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
@@ -50,23 +49,30 @@ import android.util.Base64;
  */
 public class RestClient {
   
+  //define request method
   public static enum RequestMethod {
     GET, POST, PUT, DELETE;
   }
   
+  //define authorization for header of request
   private final String AUTHORIZATION = "Authorization";
+  //define list of params
   private List<NameValuePair> params;
+  //define list of header
   private List<NameValuePair> headers;
+  //define url
   private String url;
+  //define response code which contain code of respone(ex: 200)
   private int responseCode;
+  //define error message of web service
   private String errorMessage;
+  //define response string
   private String responseStr;
+  //define respone
   private HttpResponse respone;
-  String username = "root";
-  String password = "gtn";
   
   /**
-   * 
+   * RestClient constructor
    */
   public RestClient(String url) {
     this.url = url;
@@ -74,8 +80,17 @@ public class RestClient {
     headers = new ArrayList<NameValuePair>();
   }
 
+  /**
+   * check search type and execute request
+   * 
+   * @param method The type of request method(ex: GET, POST...)
+   * @throws UnsupportedEncodingException
+   * @throws ClientProtocolException
+   * @throws IOException
+   */
   public void execute(RequestMethod method) throws UnsupportedEncodingException, ClientProtocolException, IOException {
     switch (method) {
+      //case request is get
       case GET:
         {
           String combinedParams = "";
@@ -98,6 +113,7 @@ public class RestClient {
           executeRequest(request, url);
           break;
         }
+      //case request is post
       case POST:
         {
           HttpPost request = new HttpPost(url);
@@ -111,6 +127,7 @@ public class RestClient {
           executeRequest(request, url);
           break;
         }
+      //case request is delete
       case DELETE:
         {
           HttpDelete request = new HttpDelete(url);
@@ -121,6 +138,7 @@ public class RestClient {
           executeRequest(request, url);
           break;
         }
+      //case request is put
       case PUT:
         {
           HttpPut request = new HttpPut();
@@ -134,10 +152,22 @@ public class RestClient {
     }
   }
   
+  /**
+   * add param to param list
+   * 
+   * @param name
+   * @param value
+   */
   public void addParam(String name, String value) {
     params.add(new BasicNameValuePair(name, value));
   }
   
+  /**
+   * add header to header list
+   * 
+   * @param name
+   * @param value
+   */
   public void addHeader(String name, String value) {
     headers.add(new BasicNameValuePair(name, value));
   }
@@ -170,6 +200,14 @@ public class RestClient {
     return respone;
   }
   
+  /**
+   * execute request and get response
+   * 
+   * @param request
+   * @param url
+   * @throws ClientProtocolException
+   * @throws IOException
+   */
   private void executeRequest(HttpUriRequest request, String url) throws ClientProtocolException, IOException {
     DefaultHttpClient client = new DefaultHttpClient();
     HttpResponse respone;
@@ -184,6 +222,12 @@ public class RestClient {
     }
   }
   
+  /**
+   * convert input stream to string
+   * 
+   * @param is
+   * @return
+   */
   private String convertStreamToString(InputStream is) {
     BufferedReader reader = new BufferedReader(new InputStreamReader(is));
     StringBuilder sb = new StringBuilder();
@@ -204,8 +248,13 @@ public class RestClient {
     return sb.toString();
   }
   
+  /**
+   * create authorization for header of request
+   * 
+   * @return
+   */
   private String getAuthorization() {
-    return "Basic " + Base64.encodeToString((username + ":" + password).getBytes(), Base64.NO_WRAP);
+    return "Basic " + Base64.encodeToString((Constants.USERNAME + ":" + Constants.PASSWORD).getBytes(), Base64.NO_WRAP);
   }
 
 }

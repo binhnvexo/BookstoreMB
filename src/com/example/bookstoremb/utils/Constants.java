@@ -26,15 +26,26 @@ import android.view.Menu;
  */
 public class Constants {
   
+  //define menu constant
   public static final int MENU_EDIT = Menu.FIRST + 1;
   public static final int MENU_BACK = Menu.FIRST + 2;
   public static final int MENU_CLOSE = Menu.FIRST + 3;
   public static final int MENU_SEARCH = Menu.FIRST + 4;
   
+  //define few name of view
   public static final String BOOK_ID = "bookId";
   public static final String BOOK_NAME = "name";
   public static final String BOOK_CATEGORY = "category";
   public static final String BOOK_CONTENT = "content";
   public static final String SEARCH_CONDITION = "search_condition";
+  
+  //define url
+  public static final String SEARCH_ALL_BOOK_URL = "http://192.168.1.130:8080/rest/private/bookstore/searchAllBook";
+  public static final String SEARCH_BOOK_BY_NAME = "http://192.168.1.130:8080/rest/private/bookstore/searchBookByName/";
+  public static final String SEARCH_AUTHOR = "http://192.168.1.130:8080/rest/private/bookstore/searchAuthorByBookId/";
+  
+  //define username and password for web service
+  public static final String USERNAME = "root";
+  public static final String PASSWORD = "gtn";
   
 }

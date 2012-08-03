@@ -53,6 +53,13 @@ public class Utils {
     return category != null ? Book.CATEGORY.valueOf(category) : null;
   }
   
+  /**
+   * create book from json
+   * 
+   * @param json
+   * @return
+   * @throws JSONException
+   */
   public static Book createBookFromJSON(JSONObject json) throws JSONException {
     Book book = new Book();
     book.setBookId(json.getString("bookId"));
@@ -62,6 +69,13 @@ public class Utils {
     return book;
   }
   
+  /**
+   * create author from json
+   * 
+   * @param json
+   * @return
+   * @throws JSONException
+   */
   public static Author createAuthorFromJSON(JSONObject json) throws JSONException {
     Author author = new Author();
     author.setAuthorId(json.getString("authorId"));

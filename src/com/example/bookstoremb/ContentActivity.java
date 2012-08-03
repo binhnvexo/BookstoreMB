@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
 import org.apache.http.client.ClientProtocolException;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -19,7 +18,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-import com.example.bookstoremb.adapter.BookstoreAdapter;
 import com.example.bookstoremb.models.Author;
 import com.example.bookstoremb.models.Book;
 import com.example.bookstoremb.utils.Constants;
@@ -27,23 +25,33 @@ import com.example.bookstoremb.utils.RestClient;
 import com.example.bookstoremb.utils.Utils;
 
 /**
- * @author Administrator
- *
+ * Created by The eXo Platform SAS
+ * Author : BinhNV
+ *          binhnv@exoplatform.com
+ * Jul 5, 2012  
  */
 public class ContentActivity extends Activity {
 
+  //create book for show information
   private Book book;
-  private String SEARCH_AUTHOR = "http://192.168.1.130:8080/rest/private/bookstore/searchAuthorByBookId/";
+  //create search condition for keep condition for return to search screen
   private String searchCondition;
   
+  /**
+   * create main screen for app
+   */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_content);
+		
+		//create view for content activity
 		TextView name = (TextView) findViewById(R.id.name);
 		TextView content = (TextView) findViewById(R.id.content);
 		TextView category = (TextView) findViewById(R.id.category);
 		TextView author = (TextView) findViewById(R.id.author);
+		
+		//check extras from intent
 		Bundle extras = getIntent().getExtras();
 		book = new Book();
 		if (extras != null) {
@@ -53,13 +61,17 @@ public class ContentActivity extends Activity {
 		  book.setContent(extras.getString(Constants.BOOK_CONTENT));
 		  searchCondition = extras.getString(Constants.SEARCH_CONDITION);
     }
+		
+		//set data for view
 		name.setText(book.getName());
 		content.setText(book.getContent());
 		category.setText(Utils.bookCategoryEnumToString(book.getCategory()));
 		content.setMovementMethod(new ScrollingMovementMethod());
+		
+		//get author from web service
 		Author au = new Author();
 		try {
-		  RestClient rest = new RestClient(SEARCH_AUTHOR + book.getBookId());
+		  RestClient rest = new RestClient(Constants.SEARCH_AUTHOR + book.getBookId());
       rest.execute(RestClient.RequestMethod.GET);
       if (rest.getResponseCode() == 200) {
         JSONObject json = new JSONObject(rest.getResponseStr());
@@ -82,6 +94,7 @@ public class ContentActivity extends Activity {
    */
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
+    //define back menu
     menu.add(menu.NONE, Constants.MENU_BACK, menu.NONE, R.string.menu_back);
     return super.onCreateOptionsMenu(menu);
   }
@@ -91,6 +104,8 @@ public class ContentActivity extends Activity {
    */
   @Override
   public boolean onMenuItemSelected(int featureId, MenuItem item) {
+    //add action for menu
+    //execute return to search screen
     Intent intent = new Intent(this, MainActivity.class);
     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
     if (searchCondition != null || "".equals(searchCondition)) {

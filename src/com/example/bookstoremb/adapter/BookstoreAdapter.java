@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,7 +27,6 @@ import android.widget.BaseAdapter;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.example.bookstoremb.MainActivity;
 import com.example.bookstoremb.R;
 import com.example.bookstoremb.models.Book;
 
@@ -40,12 +38,15 @@ import com.example.bookstoremb.models.Book;
  */
 public class BookstoreAdapter extends BaseAdapter {
 
+  //define context
   private Context context;
+  //define list of book which will be show book name to screen
   private List<Book> arr = new ArrayList<Book>();
+  //define layout inflater which allow create view
   private static LayoutInflater inflater;
   
   /**
-   * 
+   * BookstoreAdapter constructor
    */
   public BookstoreAdapter(Context context, List<Book> arr) {
     this.context = context;
@@ -104,6 +105,12 @@ public class BookstoreAdapter extends BaseAdapter {
     return convertView;
   }
   
+  /**
+   * define view holder class which contain text view for list
+   * 
+   * @author binhnv
+   *
+   */
   public static class ViewHolder {
     public TextView textView;
   }
