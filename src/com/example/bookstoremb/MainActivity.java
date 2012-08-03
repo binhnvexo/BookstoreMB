@@ -19,6 +19,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -29,6 +30,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.bookstoremb.adapter.BookstoreAdapter;
 import com.example.bookstoremb.models.Book;
@@ -47,6 +49,7 @@ public class MainActivity extends ListActivity {
     private TextView nocontent;
     private LinearLayout main;
     private String searchCondition;
+    private String bookName;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -63,7 +66,7 @@ public class MainActivity extends ListActivity {
           searchCondition = SEARCH_ALL_BOOK_URL;
           renderList(SEARCH_ALL_BOOK_URL);
         } else {
-          String bookName = extras.getString(Constants.BOOK_NAME);
+          bookName = extras.getString(Constants.BOOK_NAME);
           searchCondition = extras.getString(Constants.SEARCH_CONDITION);
           if (bookName == null || "".equals(bookName)) {
             renderList(searchCondition);
@@ -75,6 +78,8 @@ public class MainActivity extends ListActivity {
     }
 
     private void initView() {
+      bookName = "";
+      searchCondition = "";
       main = (LinearLayout) findViewById(R.id.main);
       nocontent = new TextView(this);
       nocontent.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
@@ -201,4 +206,22 @@ public class MainActivity extends ListActivity {
       return super.onMenuItemSelected(featureId, item);
     }
 
+    /* (non-Javadoc)
+     * @see android.app.Activity#onKeyDown(int, android.view.KeyEvent)
+     */
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+      if (keyCode == KeyEvent.KEYCODE_BACK) {
+        if (bookName != null || "".equals(bookName)) {
+          main.removeView(btnReturn);
+          main.removeView(nocontent);
+          bookName = "";
+          searchCondition = SEARCH_ALL_BOOK_URL;
+          renderList(SEARCH_ALL_BOOK_URL);
+          return true;
+        }
+      }
+      return super.onKeyDown(keyCode, event);
+    }
+    
 }
