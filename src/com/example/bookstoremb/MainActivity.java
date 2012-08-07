@@ -9,7 +9,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.Context;
@@ -43,7 +42,7 @@ import com.example.bookstoremb.wrapper.SearchWrapper;
  *          binhnv@exoplatform.com
  * Jul 5, 2012  
  */
-@SuppressLint("NewApi")
+
 public class MainActivity extends ListActivity {
 
     //List of book which will be show to screen
