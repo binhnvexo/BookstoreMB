@@ -16,14 +16,13 @@
  */
 package com.example.bookstoremb.wrapper;
 
-import com.example.bookstoremb.R;
-import com.sun.xml.internal.ws.util.StringUtils;
-
 import android.content.Context;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.TextView;
+
+import com.example.bookstoremb.R;
 
 /**
  * Created by The eXo Platform SAS
