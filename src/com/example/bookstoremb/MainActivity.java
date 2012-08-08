@@ -14,6 +14,7 @@ import android.app.ListActivity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -34,6 +35,7 @@ import com.example.bookstoremb.models.Book;
 import com.example.bookstoremb.utils.Constants;
 import com.example.bookstoremb.utils.RestClient;
 import com.example.bookstoremb.utils.Utils;
+import com.example.bookstoremb.wrapper.IPWrapper;
 import com.example.bookstoremb.wrapper.SearchWrapper;
 
 /**
@@ -57,6 +59,8 @@ public class MainActivity extends ListActivity {
     private String searchCondition;
     //The name of book
     private String bookName;
+    //The ip address
+    private String ip;
     
     /**
      * create main screen for app
@@ -76,28 +80,104 @@ public class MainActivity extends ListActivity {
         //init all view for main activity
         initView();
         
-        //get extract from intent
-        Bundle extras = getIntent().getExtras();
-        if (extras == null) {
-          //case once time access to app
-          main.removeView(btnReturn);
-          searchCondition = Constants.SEARCH_ALL_BOOK_URL;
-          renderList(Constants.SEARCH_ALL_BOOK_URL);
-        } else {
-          bookName = extras.getString(Constants.BOOK_NAME);
-          searchCondition = extras.getString(Constants.SEARCH_CONDITION);
-          //don't have book name => not search or search all
-          if (bookName == null || "".equals(bookName)) {
-            renderList(searchCondition);
+        SharedPreferences settings = getSharedPreferences(Constants.PREFS_IP, 0);
+        ip = settings.getString(Constants.PREFS_IP_VALUE, null);        
+        
+        if (ip != null && !"".equals(ip)) {
+          ip = ip.trim();
+          //get extract from intent
+          Bundle extras = getIntent().getExtras();
+          if (extras == null) {
+            //case once time access to app
+            main.removeView(btnReturn);
+            searchCondition = Constants.HTTP + ip + Constants.SEARCH_ALL_BOOK_URL;
+            renderList(Constants.HTTP + ip + Constants.SEARCH_ALL_BOOK_URL);
           } else {
-            //search with condition
-            searchCondition = Constants.SEARCH_BOOK_BY_NAME + bookName.replaceAll(" ", "");
-            renderList(Constants.SEARCH_BOOK_BY_NAME + bookName.replaceAll(" ", ""));
+            bookName = extras.getString(Constants.BOOK_NAME);
+            searchCondition = extras.getString(Constants.SEARCH_CONDITION);
+            //don't have book name => not search or search all
+            if (bookName == null || "".equals(bookName)) {
+              renderList(searchCondition);
+            } else {
+              //search with condition
+              searchCondition = Constants.HTTP + ip + Constants.SEARCH_BOOK_BY_NAME + bookName.replaceAll(" ", "");
+              renderList(Constants.HTTP + ip + Constants.SEARCH_BOOK_BY_NAME + bookName.replaceAll(" ", ""));
+            }
           }
+        } else {
+          Context dialogContext = this;
+          createIPWrapper(dialogContext);
         }
         
     }
 
+    private void createIPWrapper(final Context context) {
+      //create layout inflater
+      LayoutInflater ipInflater = LayoutInflater.from(this);
+      View ipView = ipInflater.inflate(R.layout.activity_add_ip, null);
+      //create search wrapper which allow show popup search to screen
+      final IPWrapper ipWrapper = new IPWrapper(ipView, this);
+      
+      //add alert dialog for search show to screen
+      new AlertDialog.Builder(this).setTitle(R.string.tltaddip)
+                                 .setView(ipView)
+                                 //add positive button
+                                 .setPositiveButton(R.string.btnadd, new DialogInterface.OnClickListener() {
+
+                                   @Override
+                                   public void onClick(DialogInterface dialog, int which) {
+                                     SharedPreferences settings = getSharedPreferences(Constants.PREFS_IP, 0);
+                                     SharedPreferences.Editor editor = settings.edit();
+                                     editor.putString(Constants.PREFS_IP_VALUE, ipWrapper.getIPStr() + ":" + ipWrapper.getPortStr());
+                                     editor.commit();
+                                     Intent intent = new Intent(context, MainActivity.class);
+                                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                     startActivity(intent);
+                                   }
+                                 })
+                                 //add negative button
+                                 .setNegativeButton(R.string.btncancel, new DialogInterface.OnClickListener() {
+
+                                   @Override
+                                   public void onClick(DialogInterface dialog, int which) {
+                                     
+                                   }
+                                 })
+                                 .show();
+    }
+    
+    private void createSearchWrapper(final Context context) {
+      //create layout inflater
+      LayoutInflater inflater = LayoutInflater.from(this);
+      View searchView = inflater.inflate(R.layout.activity_search, null);
+      //create search wrapper which allow show popup search to screen
+      final SearchWrapper wrapper = new SearchWrapper(searchView, this);
+      //add alert dialog for search show to screen
+      new AlertDialog.Builder(this).setTitle(R.string.tltsearch)
+                                 .setView(searchView)
+                                 //add positive button
+                                 .setPositiveButton(R.string.btnsearch, new DialogInterface.OnClickListener() {
+
+                                   @Override
+                                   public void onClick(DialogInterface dialog, int which) {
+                                     String bookName = wrapper.getBookNameStr();
+                                     Intent intent = new Intent(context, MainActivity.class);
+                                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                     intent.putExtra(Constants.BOOK_NAME, bookName);
+                                     startActivity(intent);
+                                   }
+                                 })
+                                 //add negative button
+                                 .setNegativeButton(R.string.btncancel, new DialogInterface.OnClickListener() {
+
+                                   @Override
+                                   public void onClick(DialogInterface dialog, int which) {
+                                     
+                                   }
+                                 })
+                                 .show();
+    }
+    
     /**
      * init all view for main screen
      */
@@ -114,13 +194,14 @@ public class MainActivity extends ListActivity {
       books = new ArrayList<Book>();
       //init button and add listener for it
       btnReturn = (Button) findViewById(R.id.btnReturn);
+      final String nestIP = ip;
       btnReturn.setOnClickListener(new OnClickListener() {
         
         @Override
         public void onClick(View v) {
           main.removeView(btnReturn);
           main.removeView(nocontent);
-          renderList(Constants.SEARCH_ALL_BOOK_URL);
+          renderList(Constants.HTTP + nestIP + Constants.SEARCH_ALL_BOOK_URL);
         }
         
       });
@@ -169,6 +250,9 @@ public class MainActivity extends ListActivity {
       } catch (IOException e) {
         e.printStackTrace();
         prepareViewResponseError();
+      } catch (Exception e) {
+        e.printStackTrace();
+        prepareViewResponseError();
       }
     }
     
@@ -209,6 +293,7 @@ public class MainActivity extends ListActivity {
       //define menu with 2 option: close and search
       menu.add(menu.NONE, Constants.MENU_CLOSE, menu.NONE, R.string.menu_close);
       menu.add(menu.NONE, Constants.MENU_SEARCH, menu.NONE, R.string.menu_search);
+      menu.add(menu.NONE, Constants.MENU_ADD_IP, menu.NONE, R.string.menu_add_ip);
       return super.onCreateOptionsMenu(menu);
     }
 
@@ -217,6 +302,7 @@ public class MainActivity extends ListActivity {
      */
     @Override
     public boolean onMenuItemSelected(int featureId, MenuItem item) {
+      final Context nestContext = this;
       //add action for menu
       switch (item.getItemId()) {
       //assign action for close menu
@@ -224,38 +310,14 @@ public class MainActivity extends ListActivity {
         finish();
         System.exit(0);
         break;
+      //assign action for close menu
+      case Constants.MENU_ADD_IP:
+        //create layout inflater
+        createIPWrapper(nestContext);
+        break;
       //assign action for search menu
       case Constants.MENU_SEARCH:
-        //create layout inflater
-        LayoutInflater inflater = LayoutInflater.from(this);
-        View searchView = inflater.inflate(R.layout.activity_search, null);
-        //create search wrapper which allow show popup search to screen
-        final SearchWrapper wrapper = new SearchWrapper(searchView, this);
-        final Context nestContext = this;
-        //add alert dialog for search show to screen
-        new AlertDialog.Builder(this).setTitle(R.string.tltsearch)
-                                   .setView(searchView)
-                                   //add positive button
-                                   .setPositiveButton(R.string.btnsearch, new DialogInterface.OnClickListener() {
-
-                                     @Override
-                                     public void onClick(DialogInterface dialog, int which) {
-                                       String bookName = wrapper.getBookNameStr();
-                                       Intent intent = new Intent(nestContext, MainActivity.class);
-                                       intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                       intent.putExtra(Constants.BOOK_NAME, bookName);
-                                       startActivity(intent);
-                                     }
-                                   })
-                                   //add negative button
-                                   .setNegativeButton(R.string.btncancel, new DialogInterface.OnClickListener() {
-
-                                     @Override
-                                     public void onClick(DialogInterface dialog, int which) {
-                                       
-                                     }
-                                   })
-                                   .show();
+        createSearchWrapper(nestContext);
         break;
       }
       return super.onMenuItemSelected(featureId, item);
@@ -272,8 +334,8 @@ public class MainActivity extends ListActivity {
           main.removeView(btnReturn);
           main.removeView(nocontent);
           bookName = "";
-          searchCondition = Constants.SEARCH_ALL_BOOK_URL;
-          renderList(Constants.SEARCH_ALL_BOOK_URL);
+          searchCondition = Constants.HTTP + ip + Constants.SEARCH_ALL_BOOK_URL;
+          renderList(Constants.HTTP + ip + Constants.SEARCH_ALL_BOOK_URL);
           return true;
         }
       }

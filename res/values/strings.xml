@@ -7,10 +7,15 @@
     <string name="menu_close">CLOSE APP</string>
     <string name="menu_back">BACK</string>
     <string name="menu_search">SEARCH</string>
+    <string name="menu_add_ip">ADD IP</string>
+    <string name="tltaddip">ADD IP</string>
     <string name="tltsearch">SEARCH BOOK</string>
+    <string name="btnadd">ADD</string>
     <string name="btnsearch">SEARCH</string>
     <string name="btncancel">CANCEL</string>
     <string name="hint">Book name</string>
+    <string name="hintip">Input ip</string>
+    <string name="hintport">Input port</string>
     <string name="nocontent">No data</string>
 
 </resources>

@@ -12,6 +12,7 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.view.Menu;
@@ -36,6 +37,8 @@ public class ContentActivity extends Activity {
   private Book book;
   //create search condition for keep condition for return to search screen
   private String searchCondition;
+  //The ip address
+  private String ip;
   
   /**
    * create main screen for app
@@ -50,6 +53,9 @@ public class ContentActivity extends Activity {
 		TextView content = (TextView) findViewById(R.id.content);
 		TextView category = (TextView) findViewById(R.id.category);
 		TextView author = (TextView) findViewById(R.id.author);
+		
+		SharedPreferences settings = getSharedPreferences(Constants.PREFS_IP, 0);
+    ip = settings.getString(Constants.PREFS_IP_VALUE, null);
 		
 		//check extras from intent
 		Bundle extras = getIntent().getExtras();
@@ -71,7 +77,7 @@ public class ContentActivity extends Activity {
 		//get author from web service
 		Author au = new Author();
 		try {
-		  RestClient rest = new RestClient(Constants.SEARCH_AUTHOR + book.getBookId());
+		  RestClient rest = new RestClient(Constants.HTTP + ip + Constants.SEARCH_AUTHOR + book.getBookId());
       rest.execute(RestClient.RequestMethod.GET);
       if (rest.getResponseCode() == 200) {
         JSONObject json = new JSONObject(rest.getResponseStr());
