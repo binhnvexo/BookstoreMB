@@ -17,6 +17,7 @@
 package com.example.bookstoremb.wrapper;
 
 import com.example.bookstoremb.R;
+import com.sun.xml.internal.ws.util.StringUtils;
 
 import android.content.Context;
 import android.view.View;
@@ -68,7 +69,7 @@ public class IPWrapper implements OnItemSelectedListener {
    */
   public String getIPStr() {
     if (ipStr == null) {
-      ipStr = ip.getText().toString();
+      ipStr = ip.getText().toString().replaceAll(" ", "");
     }
     return ipStr;
   }
@@ -78,7 +79,7 @@ public class IPWrapper implements OnItemSelectedListener {
    */
   public String getPortStr() {
     if (portStr == null) {
-      portStr = port.getText().toString();
+      portStr = port.getText().toString().replaceAll(" ", "");
     }
     return portStr;
   }

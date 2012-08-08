@@ -61,6 +61,7 @@ public class MainActivity extends ListActivity {
     private String bookName;
     //The ip address
     private String ip;
+    private String searching;
     
     /**
      * create main screen for app
@@ -94,6 +95,7 @@ public class MainActivity extends ListActivity {
             renderList(Constants.HTTP + ip + Constants.SEARCH_ALL_BOOK_URL);
           } else {
             bookName = extras.getString(Constants.BOOK_NAME);
+            searching = extras.getString(Constants.SEARCHING);
             searchCondition = extras.getString(Constants.SEARCH_CONDITION);
             //don't have book name => not search or search all
             if (bookName == null || "".equals(bookName)) {
@@ -128,7 +130,9 @@ public class MainActivity extends ListActivity {
                                    public void onClick(DialogInterface dialog, int which) {
                                      SharedPreferences settings = getSharedPreferences(Constants.PREFS_IP, 0);
                                      SharedPreferences.Editor editor = settings.edit();
-                                     editor.putString(Constants.PREFS_IP_VALUE, ipWrapper.getIPStr() + ":" + ipWrapper.getPortStr());
+                                     String ip = ipWrapper.getIPStr();
+                                     String port = ipWrapper.getPortStr();
+                                     editor.putString(Constants.PREFS_IP_VALUE, ip + ":" + port);
                                      editor.commit();
                                      Intent intent = new Intent(context, MainActivity.class);
                                      intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -164,6 +168,7 @@ public class MainActivity extends ListActivity {
                                      Intent intent = new Intent(context, MainActivity.class);
                                      intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                      intent.putExtra(Constants.BOOK_NAME, bookName);
+                                     intent.putExtra(Constants.SEARCHING, bookName);
                                      startActivity(intent);
                                    }
                                  })
@@ -194,13 +199,17 @@ public class MainActivity extends ListActivity {
       books = new ArrayList<Book>();
       //init button and add listener for it
       btnReturn = (Button) findViewById(R.id.btnReturn);
-      final String nestIP = ip;
       btnReturn.setOnClickListener(new OnClickListener() {
         
         @Override
         public void onClick(View v) {
           main.removeView(btnReturn);
           main.removeView(nocontent);
+          searching = "";
+          bookName = "";
+          searchCondition = "";
+          SharedPreferences settings = getSharedPreferences(Constants.PREFS_IP, 0);
+          String nestIP = settings.getString(Constants.PREFS_IP_VALUE, null);  
           renderList(Constants.HTTP + nestIP + Constants.SEARCH_ALL_BOOK_URL);
         }
         
@@ -234,6 +243,13 @@ public class MainActivity extends ListActivity {
           //set data to adapter
           adapter = new BookstoreAdapter(this, books);
           this.setListAdapter(adapter);
+          if (bookName == null || "".equals(bookName)) {
+            main.removeView(btnReturn);
+          }
+          if (searching != null && !"".equals(searching)) {
+            main.removeView(btnReturn);
+            main.addView(btnReturn);
+          }
         } else {
           //case response code return error
           adapter = new BookstoreAdapter(this, books);
@@ -282,6 +298,9 @@ public class MainActivity extends ListActivity {
       intent.putExtra(Constants.BOOK_CATEGORY, Utils.bookCategoryEnumToString(book.getCategory()));
       intent.putExtra(Constants.BOOK_CONTENT, book.getContent());
       intent.putExtra(Constants.SEARCH_CONDITION, searchCondition);
+      if (bookName != null && !"".equals(bookName)) {
+        intent.putExtra(Constants.SEARCHING, bookName);
+      }
       startActivity(intent);
     }
     

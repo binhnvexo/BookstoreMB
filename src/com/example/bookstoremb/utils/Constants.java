@@ -53,4 +53,7 @@ public class Constants {
   public static final String PREFS_IP = "prefs_ip";
   public static final String PREFS_IP_VALUE = "prefs_ip_value";
   
+  public static final String SEARCHING = "searching";
+  public static final String SEARCHING_VAL = "searching_val";
+  
 }

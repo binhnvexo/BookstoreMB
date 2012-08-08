@@ -39,6 +39,8 @@ public class ContentActivity extends Activity {
   private String searchCondition;
   //The ip address
   private String ip;
+  //The name of book
+  private String bookName;
   
   /**
    * create main screen for app
@@ -56,7 +58,7 @@ public class ContentActivity extends Activity {
 		
 		SharedPreferences settings = getSharedPreferences(Constants.PREFS_IP, 0);
     ip = settings.getString(Constants.PREFS_IP_VALUE, null);
-		
+    
 		//check extras from intent
 		Bundle extras = getIntent().getExtras();
 		book = new Book();
@@ -66,6 +68,7 @@ public class ContentActivity extends Activity {
 		  book.setCategory(Utils.bookCategoryStringToEnum(extras.getString(Constants.BOOK_CATEGORY)));
 		  book.setContent(extras.getString(Constants.BOOK_CONTENT));
 		  searchCondition = extras.getString(Constants.SEARCH_CONDITION);
+		  bookName = extras.getString(Constants.SEARCHING);
     }
 		
 		//set data for view
@@ -77,7 +80,7 @@ public class ContentActivity extends Activity {
 		//get author from web service
 		Author au = new Author();
 		try {
-		  RestClient rest = new RestClient(Constants.HTTP + ip + Constants.SEARCH_AUTHOR + book.getBookId());
+		  RestClient rest = new RestClient(Constants.HTTP + ip.trim() + Constants.SEARCH_AUTHOR + book.getBookId());
       rest.execute(RestClient.RequestMethod.GET);
       if (rest.getResponseCode() == 200) {
         JSONObject json = new JSONObject(rest.getResponseStr());
@@ -114,8 +117,12 @@ public class ContentActivity extends Activity {
     //execute return to search screen
     Intent intent = new Intent(this, MainActivity.class);
     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-    if (searchCondition != null || "".equals(searchCondition)) {
+    if (searchCondition != null && !"".equals(searchCondition)) {
       intent.putExtra(Constants.SEARCH_CONDITION, searchCondition);
+    }
+    if (bookName != null && !"".equals(bookName)) {
+      intent.putExtra(Constants.SEARCHING, bookName);
+      intent.putExtra(Constants.BOOK_NAME, bookName);
     }
     startActivity(intent);
     finish();
